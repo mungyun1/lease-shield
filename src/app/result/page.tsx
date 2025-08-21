@@ -23,6 +23,8 @@ import {
   BookOpen,
   Play,
   Home,
+  MapPin,
+  DollarSign,
 } from "lucide-react";
 import { RiskAnalysis, ContractData, RiskFactor } from "@/types";
 import { getGradeColor, getGradeText } from "@/utils";
@@ -170,6 +172,47 @@ export default function ResultPage() {
     };
   };
 
+  // 지역을 한국어로 변환하는 함수
+  const getKoreanRegion = (region: string): string => {
+    const regionMap: { [key: string]: string } = {
+      seoul: "서울",
+      busan: "부산",
+      daegu: "대구",
+      incheon: "인천",
+      gwangju: "광주",
+      daejeon: "대전",
+      ulsan: "울산",
+      sejong: "세종",
+      gyeonggi: "경기도",
+      gangwon: "강원도",
+      chungbuk: "충청북도",
+      chungnam: "충청남도",
+      jeonbuk: "전라북도",
+      jeonnam: "전라남도",
+      gyeongbuk: "경상북도",
+      gyeongnam: "경상남도",
+      jeju: "제주도",
+    };
+    return regionMap[region.toLowerCase()] || region;
+  };
+
+  // 주택 유형을 한국어로 변환하는 함수
+  const getKoreanHousingType = (housingType: string): string => {
+    const housingTypeMap: { [key: string]: string } = {
+      apartment: "아파트",
+      house: "단독주택",
+      villa: "빌라",
+      officetel: "오피스텔",
+      studio: "원룸",
+      duplex: "듀플렉스",
+      penthouse: "펜트하우스",
+      townhouse: "타운하우스",
+      condo: "콘도",
+      loft: "로프트",
+    };
+    return housingTypeMap[housingType.toLowerCase()] || housingType;
+  };
+
   useEffect(() => {
     if (riskResult) {
       const timer = setInterval(() => {
@@ -307,7 +350,7 @@ ${riskResult.explanation}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent"
           >
             전세 계약 위험 진단 결과
           </motion.h1>
@@ -327,35 +370,123 @@ ${riskResult.explanation}
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="inline-block"
+              className="w-full"
             >
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                  <div className="text-center">
-                    <div className="text-gray-500 mb-1">지역</div>
-                    <div className="font-semibold text-gray-800">
-                      {contractData.region}
+              <div className="bg-gradient-to-r from-white/90 to-blue-50/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 p-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                    계약 정보 요약
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {/* 지역 정보 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-center group"
+                  >
+                    <div className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-4 mb-3 group-hover:shadow-lg transition-all duration-300">
+                      <MapPin className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                     </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-gray-500 mb-1">주택유형</div>
-                    <div className="font-semibold text-gray-800">
-                      {contractData.housingType}
+                    <div className="text-gray-500 text-sm mb-1 font-medium">
+                      지역
                     </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-gray-500 mb-1">보증금</div>
-                    <div className="font-semibold text-gray-800">
+                    <div className="font-bold text-gray-800 text-lg">
+                      {getKoreanRegion(contractData.region)}
+                    </div>
+                  </motion.div>
+
+                  {/* 주택유형 정보 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="text-center group"
+                  >
+                    <div className="bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl p-4 mb-3 group-hover:shadow-lg transition-all duration-300">
+                      <Home className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
+                    </div>
+                    <div className="text-gray-500 text-sm mb-1 font-medium">
+                      주택유형
+                    </div>
+                    <div className="font-bold text-gray-800 text-lg">
+                      {getKoreanHousingType(contractData.housingType)}
+                    </div>
+                  </motion.div>
+
+                  {/* 보증금 정보 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="text-center group"
+                  >
+                    <div className="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-4 mb-3 group-hover:shadow-lg transition-all duration-300">
+                      <DollarSign className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                    </div>
+                    <div className="text-gray-500 text-sm mb-1 font-medium">
+                      보증금
+                    </div>
+                    <div className="font-bold text-gray-800 text-lg">
                       {contractData.deposit.toLocaleString()}만원
                     </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-gray-500 mb-1">대출금</div>
-                    <div className="font-semibold text-gray-800">
+                  </motion.div>
+
+                  {/* 대출금 정보 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="text-center group"
+                  >
+                    <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-4 mb-3 group-hover:shadow-lg transition-all duration-300">
+                      <TrendingUp className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+                    </div>
+                    <div className="text-gray-500 text-sm mb-1 font-medium">
+                      대출금
+                    </div>
+                    <div className="font-bold text-gray-800 text-lg">
                       {contractData.loanAmount.toLocaleString()}만원
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
+
+                {/* 추가 계약 정보 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="mt-6 pt-6 border-t border-gray-200"
+                >
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center justify-center p-3 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl">
+                      <div className="flex items-center">
+                        <Shield className="w-5 h-5 text-gray-600 mr-2" />
+                        <span className="text-sm text-gray-600">
+                          선순위 채권:
+                        </span>
+                        <span className="ml-2 font-semibold text-gray-800">
+                          {contractData.hasPriorityDebt ? "있음" : "없음"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-center p-3 bg-gradient-to-r from-gray-50 to-green-50 rounded-xl">
+                      <div className="flex items-center">
+                        <CheckCircle className="w-5 h-5 text-gray-600 mr-2" />
+                        <span className="text-sm text-gray-600">
+                          임차권 등기:
+                        </span>
+                        <span className="ml-2 font-semibold text-gray-800">
+                          {contractData.hasTenancyRegistration
+                            ? "등기됨"
+                            : "미등기"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -462,10 +593,45 @@ ${riskResult.explanation}
             className="lg:col-span-2"
           >
             <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 h-full">
-              <h2 className="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                 <Shield className="w-7 h-7 mr-3 text-blue-600" />
-                위험 요인별 영향도
+                위험 요인별 영향도 분석
               </h2>
+
+              {/* 위험 요인 요약 카드 */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                {riskResult.factors.map((factor, index) => (
+                  <motion.div
+                    key={factor.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                    className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 text-center border border-blue-100"
+                  >
+                    <div className="text-2xl font-bold text-blue-600 mb-1">
+                      {factor.impact}%
+                    </div>
+                    <div className="text-sm font-medium text-gray-700">
+                      {factor.name}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {factor.category === "financial"
+                        ? "금융적 위험"
+                        : "법적 위험"}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* 차트 제목 및 설명 */}
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  위험 요인별 상세 분석
+                </h3>
+                <p className="text-sm text-gray-600">
+                  각 요인의 영향도를 시각적으로 확인하고, 상세 설명을 참고하세요
+                </p>
+              </div>
 
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart
@@ -475,25 +641,35 @@ ${riskResult.explanation}
                   <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                   <XAxis
                     dataKey="name"
-                    tick={{ fontSize: 12, fill: "#64748b" }}
+                    tick={{ fontSize: 12, fill: "#64748b", fontWeight: 600 }}
                     axisLine={{ stroke: "#e2e8f0" }}
+                    tickLine={false}
                   />
                   <YAxis
                     tick={{ fontSize: 12, fill: "#64748b" }}
                     axisLine={{ stroke: "#e2e8f0" }}
+                    tickLine={false}
+                    label={{
+                      value: "영향도 (%)",
+                      angle: -90,
+                      position: "insideLeft",
+                      style: { textAnchor: "middle", fill: "#64748b" },
+                    }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "rgba(255, 255, 255, 0.95)",
+                      backgroundColor: "rgba(255, 255, 255, 0.98)",
                       border: "none",
                       borderRadius: "12px",
                       boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+                      padding: "12px 16px",
                     }}
                   />
                   <Bar
                     dataKey="impact"
                     fill="url(#barGradient)"
                     radius={[8, 8, 0, 0]}
+                    maxBarSize={80}
                   />
                   <defs>
                     <linearGradient
@@ -504,40 +680,75 @@ ${riskResult.explanation}
                       y2="100%"
                     >
                       <stop offset="0%" stopColor="#3b82f6" />
+                      <stop offset="50%" stopColor="#6366f1" />
                       <stop offset="100%" stopColor="#1d4ed8" />
                     </linearGradient>
                   </defs>
                 </BarChart>
               </ResponsiveContainer>
 
-              {/* 요인별 설명 */}
-              <div className="mt-8 space-y-4">
-                {riskResult.factors.map((factor, index) => (
-                  <motion.div
-                    key={factor.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl border border-gray-100 hover:shadow-md transition-all duration-300"
-                  >
-                    <div className="flex-1">
-                      <span className="font-semibold text-gray-800 text-lg">
-                        {factor.name}
-                      </span>
-                      <p className="text-gray-600 mt-1">{factor.description}</p>
-                    </div>
-                    <div className="flex items-center ml-4">
-                      {factor.impact > 25 ? (
-                        <TrendingUp className="w-6 h-6 text-red-500 mr-3" />
-                      ) : (
-                        <TrendingDown className="w-6 h-6 text-green-500 mr-3" />
-                      )}
-                      <span className="text-lg font-bold text-gray-700 bg-white px-3 py-1 rounded-full shadow-sm">
-                        {factor.impact}%
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
+              {/* 차트 범례 */}
+              <div className="mt-4 flex items-center justify-center space-x-6 text-sm text-gray-600">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-gradient-to-b from-blue-400 to-blue-600 rounded mr-2"></div>
+                  <span>영향도 높음 (25% 이상)</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-gradient-to-b from-blue-300 to-blue-500 rounded mr-2"></div>
+                  <span>영향도 보통 (15-24%)</span>
+                </div>
+              </div>
+
+              {/* 요인별 상세 설명 */}
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                  <AlertTriangle className="w-5 h-5 mr-2 text-yellow-500" />
+                  위험 요인 상세 분석
+                </h3>
+                <div className="space-y-4">
+                  {riskResult.factors.map((factor, index) => (
+                    <motion.div
+                      key={factor.name}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl border border-gray-100 hover:shadow-md transition-all duration-300"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center mb-2">
+                          <span className="font-semibold text-gray-800 text-lg mr-3">
+                            {factor.name}
+                          </span>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              factor.category === "financial"
+                                ? "bg-blue-100 text-blue-700"
+                                : "bg-purple-100 text-purple-700"
+                            }`}
+                          >
+                            {factor.category === "financial"
+                              ? "금융적 위험"
+                              : "법적 위험"}
+                          </span>
+                        </div>
+                        <p className="text-gray-600">{factor.description}</p>
+                      </div>
+                      <div className="flex items-center ml-4">
+                        {factor.impact > 25 ? (
+                          <TrendingUp className="w-6 h-6 text-red-500 mr-3" />
+                        ) : (
+                          <TrendingDown className="w-6 h-6 text-green-500 mr-3" />
+                        )}
+                        <div className="text-center">
+                          <span className="text-2xl font-bold text-gray-700 block">
+                            {factor.impact}%
+                          </span>
+                          <span className="text-xs text-gray-500">영향도</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
