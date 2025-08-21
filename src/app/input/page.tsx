@@ -2,13 +2,9 @@
 
 import { useState } from "react";
 import { MapPin, DollarSign, Shield } from "lucide-react";
-import {
-  StepIndicator,
-  NavigationButtons,
-  PageHeader,
-  StepForm,
-} from "@/components/input";
+import { StepIndicator, PageHeader, StepForm } from "@/components/input";
 import { ContractData } from "@/types";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -73,22 +69,26 @@ export default function InputPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/50 relative overflow-hidden">
+      {/* 배경 장식 요소들 */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/20 to-indigo-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-emerald-200/20 to-blue-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-200/10 to-pink-200/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <PageHeader />
         <StepIndicator steps={steps} currentStep={currentStep} />
         <StepForm
           currentStep={currentStep}
           contractData={contractData}
           setContractData={setContractData}
-        />
-        <NavigationButtons
-          currentStep={currentStep}
-          totalSteps={steps.length}
           onPrevStep={prevStep}
           onNextStep={nextStep}
           onSubmit={handleSubmit}
           isStepValid={isStepValid()}
+          totalSteps={steps.length}
         />
       </div>
     </div>

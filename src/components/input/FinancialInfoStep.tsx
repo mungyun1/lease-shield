@@ -13,7 +13,28 @@ export default function FinancialInfoStep({
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">금융 정보</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">금융 정보</h2>
+        <div className="relative inline-block">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-500 rounded-2xl blur-sm opacity-20"></div>
+          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full animate-pulse"></div>
+                <div
+                  className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+                <div
+                  className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"
+                  style={{ animationDelay: "0.4s" }}
+                ></div>
+              </div>
+              <span className="text-sm font-semibold text-gray-700 bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                보증금과 대출 금액을 입력해주세요
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
