@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from "react";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
   // 상태를 로컬 스토리지의 값으로 초기화
   const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return initialValue;
     }
     try {
@@ -21,7 +21,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {

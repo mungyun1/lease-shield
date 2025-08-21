@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
-import { ContractData } from '@/types';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ContractData } from "@/types";
 
 const steps = [
-  { id: 1, title: '기본 정보', description: '지역과 주택 유형을 선택하세요' },
-  { id: 2, title: '금융 정보', description: '보증금과 대출금을 입력하세요' },
+  { id: 1, title: "기본 정보", description: "지역과 주택 유형을 선택하세요" },
+  { id: 2, title: "금융 정보", description: "보증금과 대출금을 입력하세요" },
   {
     id: 3,
-    title: '법적 정보',
-    description: '선순위 채권과 임차권 등록 여부를 확인하세요',
+    title: "법적 정보",
+    description: "선순위 채권과 임차권 등록 여부를 확인하세요",
   },
 ];
 
 export default function InputPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [contractData, setContractData] = useState<ContractData>({
-    region: '',
-    housingType: '',
+    region: "",
+    housingType: "",
     deposit: 0,
     loanAmount: 0,
     hasPriorityDebt: false,
@@ -40,7 +40,7 @@ export default function InputPage() {
 
   const handleSubmit = () => {
     // TODO: API 호출하여 위험 진단 시작
-    console.log('계약 데이터:', contractData);
+    console.log("계약 데이터:", contractData);
   };
 
   return (
@@ -68,8 +68,8 @@ export default function InputPage() {
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
                     step.id <= currentStep
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   {step.id}
@@ -77,7 +77,7 @@ export default function InputPage() {
                 {index < steps.length - 1 && (
                   <div
                     className={`w-16 h-1 mx-2 ${
-                      step.id < currentStep ? 'bg-blue-600' : 'bg-gray-200'
+                      step.id < currentStep ? "bg-blue-600" : "bg-gray-200"
                     }`}
                   />
                 )}
@@ -246,8 +246,8 @@ export default function InputPage() {
               disabled={currentStep === 1}
               className={`flex items-center px-4 py-2 rounded-md ${
                 currentStep === 1
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-gray-600 text-white hover:bg-gray-700'
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-gray-600 text-white hover:bg-gray-700"
               }`}
             >
               <ChevronLeft className="w-4 h-4 mr-2" />
@@ -276,4 +276,3 @@ export default function InputPage() {
     </div>
   );
 }
-

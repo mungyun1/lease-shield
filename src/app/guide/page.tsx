@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Shield,
   AlertTriangle,
@@ -9,63 +9,63 @@ import {
   Info,
   X,
   ExternalLink,
-} from 'lucide-react';
-import { PreventionGuide } from '@/types';
+} from "lucide-react";
+import { PreventionGuide } from "@/types";
 
 const guideItems: PreventionGuide[] = [
   {
-    id: '1',
-    title: '임차권 등기 신청',
-    description: '임차권을 등기부에 등록하여 우선순위를 확보하세요',
-    category: 'legal',
-    priority: 'high',
+    id: "1",
+    title: "임차권 등기 신청",
+    description: "임차권을 등기부에 등록하여 우선순위를 확보하세요",
+    category: "legal",
+    priority: "high",
     actions: [
-      '등기신청서 작성',
-      '필요 서류 준비',
-      '법원 방문 또는 온라인 신청',
+      "등기신청서 작성",
+      "필요 서류 준비",
+      "법원 방문 또는 온라인 신청",
     ],
     details:
-      '임차권 등기는 임대인이 파산하거나 집을 팔 때도 계속 거주할 수 있는 권리를 보장합니다. 특히 선순위 채권이 있는 경우 반드시 필요합니다.',
+      "임차권 등기는 임대인이 파산하거나 집을 팔 때도 계속 거주할 수 있는 권리를 보장합니다. 특히 선순위 채권이 있는 경우 반드시 필요합니다.",
   },
   {
-    id: '2',
-    title: '보증금 분할 납부 협의',
-    description: '대출금을 줄이고 보증금을 낮춰보세요',
-    category: 'financial',
-    priority: 'high',
-    actions: ['임대인과 협의', '계약서 수정', '대출 상환 계획 수립'],
+    id: "2",
+    title: "보증금 분할 납부 협의",
+    description: "대출금을 줄이고 보증금을 낮춰보세요",
+    category: "financial",
+    priority: "high",
+    actions: ["임대인과 협의", "계약서 수정", "대출 상환 계획 수립"],
     details:
-      '보증금이 높을수록 위험도가 증가합니다. 임대인과 협의하여 보증금을 낮추고 월세로 조정하는 것을 고려해보세요.',
+      "보증금이 높을수록 위험도가 증가합니다. 임대인과 협의하여 보증금을 낮추고 월세로 조정하는 것을 고려해보세요.",
   },
   {
-    id: '3',
-    title: '선순위 채권 확인',
-    description: '등기부등본을 확인하여 담보권 설정 현황을 파악하세요',
-    category: 'legal',
-    priority: 'medium',
-    actions: ['등기부등본 열람', '담보권자 정보 확인', '법률 상담 고려'],
+    id: "3",
+    title: "선순위 채권 확인",
+    description: "등기부등본을 확인하여 담보권 설정 현황을 파악하세요",
+    category: "legal",
+    priority: "medium",
+    actions: ["등기부등본 열람", "담보권자 정보 확인", "법률 상담 고려"],
     details:
-      '선순위 채권이 있는 경우 임대인이 파산하면 집을 잃을 수 있습니다. 등기부등본을 통해 담보권 설정 현황을 반드시 확인하세요.',
+      "선순위 채권이 있는 경우 임대인이 파산하면 집을 잃을 수 있습니다. 등기부등본을 통해 담보권 설정 현황을 반드시 확인하세요.",
   },
   {
-    id: '4',
-    title: '보험 가입 검토',
-    description: '임차인 보험에 가입하여 위험을 분산하세요',
-    category: 'financial',
-    priority: 'medium',
-    actions: ['보험사 상담', '보장 내용 비교', '가입 신청'],
+    id: "4",
+    title: "보험 가입 검토",
+    description: "임차인 보험에 가입하여 위험을 분산하세요",
+    category: "financial",
+    priority: "medium",
+    actions: ["보험사 상담", "보장 내용 비교", "가입 신청"],
     details:
-      '임차인 보험은 보증금 반환 보장, 이사비용 지원 등 다양한 혜택을 제공합니다. 연간 보험료는 보통 10만원 내외입니다.',
+      "임차인 보험은 보증금 반환 보장, 이사비용 지원 등 다양한 혜택을 제공합니다. 연간 보험료는 보통 10만원 내외입니다.",
   },
   {
-    id: '5',
-    title: '정기적인 계약 상태 점검',
-    description: '월 1회 계약 조건과 임대인 상태를 확인하세요',
-    category: 'other',
-    priority: 'low',
-    actions: ['월세 납부 확인', '임대인 연락처 유지', '계약서 보관'],
+    id: "5",
+    title: "정기적인 계약 상태 점검",
+    description: "월 1회 계약 조건과 임대인 상태를 확인하세요",
+    category: "other",
+    priority: "low",
+    actions: ["월세 납부 확인", "임대인 연락처 유지", "계약서 보관"],
     details:
-      '정기적인 점검을 통해 문제를 조기에 발견하고 대응할 수 있습니다. 계약서와 관련 서류는 안전한 곳에 보관하세요.',
+      "정기적인 점검을 통해 문제를 조기에 발견하고 대응할 수 있습니다. 계약서와 관련 서류는 안전한 곳에 보관하세요.",
   },
 ];
 
@@ -73,38 +73,38 @@ export default function GuidePage() {
   const [selectedGuide, setSelectedGuide] = useState<PreventionGuide | null>(
     null
   );
-  const [filter, setFilter] = useState<'all' | 'high' | 'medium' | 'low'>(
-    'all'
+  const [filter, setFilter] = useState<"all" | "high" | "medium" | "low">(
+    "all"
   );
 
   const filteredItems =
-    filter === 'all'
+    filter === "all"
       ? guideItems
       : guideItems.filter((item) => item.priority === filter);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high':
-        return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low':
-        return 'bg-green-100 text-green-800 border-green-200';
+      case "high":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "low":
+        return "bg-green-100 text-green-800 border-green-200";
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getPriorityText = (priority: string) => {
     switch (priority) {
-      case 'high':
-        return '높은 우선순위';
-      case 'medium':
-        return '중간 우선순위';
-      case 'low':
-        return '낮은 우선순위';
+      case "high":
+        return "높은 우선순위";
+      case "medium":
+        return "중간 우선순위";
+      case "low":
+        return "낮은 우선순위";
       default:
-        return '알 수 없음';
+        return "알 수 없음";
     }
   };
 
@@ -133,17 +133,17 @@ export default function GuidePage() {
           className="mb-8"
         >
           <div className="flex flex-wrap gap-2 justify-center">
-            {(['all', 'high', 'medium', 'low'] as const).map((category) => (
+            {(["all", "high", "medium", "low"] as const).map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
                 className={`px-4 py-2 rounded-full border-2 transition-all ${
                   filter === category
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-600 border-gray-300 hover:border-blue-300'
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white text-gray-600 border-gray-300 hover:border-blue-300"
                 }`}
               >
-                {category === 'all' ? '전체' : getPriorityText(category)}
+                {category === "all" ? "전체" : getPriorityText(category)}
               </button>
             ))}
           </div>
@@ -166,9 +166,9 @@ export default function GuidePage() {
                   <div
                     className={`p-2 rounded-lg ${getPriorityColor(item.priority)}`}
                   >
-                    {item.priority === 'high' ? (
+                    {item.priority === "high" ? (
                       <AlertTriangle className="w-6 h-6" />
-                    ) : item.priority === 'medium' ? (
+                    ) : item.priority === "medium" ? (
                       <Info className="w-6 h-6" />
                     ) : (
                       <CheckCircle className="w-6 h-6" />
@@ -231,9 +231,9 @@ export default function GuidePage() {
                       <div
                         className={`p-3 rounded-lg mr-4 ${getPriorityColor(selectedGuide.priority)}`}
                       >
-                        {selectedGuide.priority === 'high' ? (
+                        {selectedGuide.priority === "high" ? (
                           <AlertTriangle className="w-6 h-6" />
-                        ) : selectedGuide.priority === 'medium' ? (
+                        ) : selectedGuide.priority === "medium" ? (
                           <Info className="w-6 h-6" />
                         ) : (
                           <CheckCircle className="w-6 h-6" />
@@ -339,4 +339,3 @@ export default function GuidePage() {
     </div>
   );
 }
-

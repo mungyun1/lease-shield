@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   BarChart,
   Bar,
@@ -10,21 +10,21 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-import { TrendingUp, TrendingDown, RotateCcw, Download } from 'lucide-react';
-import { SimulationData } from '@/types';
-import { getGradeColor, getGradeText } from '@/utils';
+} from "recharts";
+import { TrendingUp, TrendingDown, RotateCcw, Download } from "lucide-react";
+import { SimulationData } from "@/types";
+import { getGradeColor, getGradeText } from "@/utils";
 
 export default function SimulationPage() {
   const [currentData, setCurrentData] = useState<SimulationData>({
-    region: 'seoul',
-    housingType: 'apartment',
+    region: "seoul",
+    housingType: "apartment",
     deposit: 5000,
     loanAmount: 3000,
     hasPriorityDebt: false,
     hasTenancyRegistration: false,
     score: 75,
-    grade: 'moderate',
+    grade: "moderate",
   });
 
   const [originalData, setOriginalData] = useState<SimulationData>({
@@ -33,8 +33,8 @@ export default function SimulationPage() {
 
   // 위험도 계산 함수 (실제로는 API 호출)
   const calculateRiskScore = (
-    data: Omit<SimulationData, 'score' | 'grade'>
-  ): { score: number; grade: 'safe' | 'moderate' | 'danger' } => {
+    data: Omit<SimulationData, "score" | "grade">
+  ): { score: number; grade: "safe" | "moderate" | "danger" } => {
     let score = 50; // 기본 점수
 
     // 보증금 영향 (높을수록 위험)
@@ -57,16 +57,16 @@ export default function SimulationPage() {
     score = Math.max(0, Math.min(100, score));
 
     // 등급 결정
-    let grade: 'safe' | 'moderate' | 'danger';
-    if (score <= 30) grade = 'safe';
-    else if (score <= 70) grade = 'moderate';
-    else grade = 'danger';
+    let grade: "safe" | "moderate" | "danger";
+    if (score <= 30) grade = "safe";
+    else if (score <= 70) grade = "moderate";
+    else grade = "danger";
 
     return { score, grade };
   };
 
   const handleInputChange = (
-    field: keyof Omit<SimulationData, 'score' | 'grade'>,
+    field: keyof Omit<SimulationData, "score" | "grade">,
     value: number | boolean
   ) => {
     const newData = { ...currentData, [field]: value };
@@ -83,19 +83,19 @@ export default function SimulationPage() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score <= 30) return 'text-green-600';
-    if (score <= 70) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score <= 30) return "text-green-600";
+    if (score <= 70) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const chartData = [
     {
-      name: '보증금',
+      name: "보증금",
       current: currentData.deposit,
       original: originalData.deposit,
     },
     {
-      name: '대출금',
+      name: "대출금",
       current: currentData.loanAmount,
       original: originalData.loanAmount,
     },
@@ -142,7 +142,7 @@ export default function SimulationPage() {
                   step="500"
                   value={currentData.deposit}
                   onChange={(e) =>
-                    handleInputChange('deposit', parseInt(e.target.value))
+                    handleInputChange("deposit", parseInt(e.target.value))
                   }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
@@ -164,7 +164,7 @@ export default function SimulationPage() {
                   step="500"
                   value={currentData.loanAmount}
                   onChange={(e) =>
-                    handleInputChange('loanAmount', parseInt(e.target.value))
+                    handleInputChange("loanAmount", parseInt(e.target.value))
                   }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
@@ -181,7 +181,7 @@ export default function SimulationPage() {
                     type="checkbox"
                     checked={currentData.hasPriorityDebt}
                     onChange={(e) =>
-                      handleInputChange('hasPriorityDebt', e.target.checked)
+                      handleInputChange("hasPriorityDebt", e.target.checked)
                     }
                     className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
@@ -196,7 +196,7 @@ export default function SimulationPage() {
                     checked={currentData.hasTenancyRegistration}
                     onChange={(e) =>
                       handleInputChange(
-                        'hasTenancyRegistration',
+                        "hasTenancyRegistration",
                         e.target.checked
                       )
                     }
@@ -269,13 +269,13 @@ export default function SimulationPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-600">선순위 채권:</span>
                     <span className="font-medium">
-                      {originalData.hasPriorityDebt ? '있음' : '없음'}
+                      {originalData.hasPriorityDebt ? "있음" : "없음"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">임차권 등기:</span>
                     <span className="font-medium">
-                      {originalData.hasTenancyRegistration ? '완료' : '미완료'}
+                      {originalData.hasTenancyRegistration ? "완료" : "미완료"}
                     </span>
                   </div>
                 </div>
@@ -319,13 +319,13 @@ export default function SimulationPage() {
                   <div className="flex justify-between">
                     <span className="text-gray-600">선순위 채권:</span>
                     <span className="font-medium">
-                      {currentData.hasPriorityDebt ? '있음' : '없음'}
+                      {currentData.hasPriorityDebt ? "있음" : "없음"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">임차권 등기:</span>
                     <span className="font-medium">
-                      {currentData.hasTenancyRegistration ? '완료' : '미완료'}
+                      {currentData.hasTenancyRegistration ? "완료" : "미완료"}
                     </span>
                   </div>
                 </div>
@@ -340,12 +340,12 @@ export default function SimulationPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800 mb-1">
-                    {currentData.score - originalData.score > 0 ? '+' : ''}
+                    {currentData.score - originalData.score > 0 ? "+" : ""}
                     {currentData.score - originalData.score}
                   </div>
                   <div className="text-sm text-gray-600">점수 변화</div>
                   <div
-                    className={`mt-2 ${currentData.score > originalData.score ? 'text-red-500' : 'text-green-500'}`}
+                    className={`mt-2 ${currentData.score > originalData.score ? "text-red-500" : "text-green-500"}`}
                   >
                     {currentData.score > originalData.score ? (
                       <TrendingUp className="w-5 h-5 mx-auto" />
@@ -356,7 +356,7 @@ export default function SimulationPage() {
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800 mb-1">
-                    {currentData.deposit - originalData.deposit > 0 ? '+' : ''}
+                    {currentData.deposit - originalData.deposit > 0 ? "+" : ""}
                     {(
                       currentData.deposit - originalData.deposit
                     ).toLocaleString()}
@@ -366,8 +366,8 @@ export default function SimulationPage() {
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800 mb-1">
                     {currentData.loanAmount - originalData.loanAmount > 0
-                      ? '+'
-                      : ''}
+                      ? "+"
+                      : ""}
                     {(
                       currentData.loanAmount - originalData.loanAmount
                     ).toLocaleString()}
@@ -435,4 +435,3 @@ export default function SimulationPage() {
     </div>
   );
 }
-

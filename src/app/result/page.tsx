@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   BarChart,
   Bar,
@@ -10,42 +10,42 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 import {
   Shield,
   AlertTriangle,
   CheckCircle,
   TrendingUp,
   TrendingDown,
-} from 'lucide-react';
-import { RiskAnalysis } from '@/types';
-import { getGradeColor, getGradeText } from '@/utils';
+} from "lucide-react";
+import { RiskAnalysis } from "@/types";
+import { getGradeColor, getGradeText } from "@/utils";
 
 const mockData: RiskAnalysis = {
   score: 75,
-  grade: 'moderate',
+  grade: "moderate",
   factors: [
     {
-      name: '보증금',
+      name: "보증금",
       impact: 30,
-      description: '지역 평균 대비 높음',
-      category: 'financial',
+      description: "지역 평균 대비 높음",
+      category: "financial",
     },
     {
-      name: '선순위 채권',
+      name: "선순위 채권",
       impact: 25,
-      description: '담보권 설정으로 인한 위험',
-      category: 'legal',
+      description: "담보권 설정으로 인한 위험",
+      category: "legal",
     },
     {
-      name: '대출금',
+      name: "대출금",
       impact: 20,
-      description: '적정 수준',
-      category: 'financial',
+      description: "적정 수준",
+      category: "financial",
     },
   ],
   explanation:
-    '현재 계약은 보증금이 지역 평균 대비 높고, 선순위 채권이 존재하여 중간 정도의 위험도를 보입니다. 임차권 등기를 통해 일부 위험을 완화할 수 있습니다.',
+    "현재 계약은 보증금이 지역 평균 대비 높고, 선순위 채권이 존재하여 중간 정도의 위험도를 보입니다. 임차권 등기를 통해 일부 위험을 완화할 수 있습니다.",
 };
 
 export default function ResultPage() {
@@ -85,11 +85,11 @@ export default function ResultPage() {
 
   const getGradeIcon = (grade: string) => {
     switch (grade) {
-      case 'safe':
+      case "safe":
         return <CheckCircle className="w-6 h-6" />;
-      case 'moderate':
+      case "moderate":
         return <AlertTriangle className="w-6 h-6" />;
-      case 'danger':
+      case "danger":
         return <Shield className="w-6 h-6" />;
       default:
         return null;
@@ -275,4 +275,3 @@ export default function ResultPage() {
     </div>
   );
 }
-

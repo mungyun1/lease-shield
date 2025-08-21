@@ -11,7 +11,7 @@ export interface ContractData {
 // 위험 분석 결과 타입
 export interface RiskAnalysis {
   score: number;
-  grade: 'safe' | 'moderate' | 'danger';
+  grade: "safe" | "moderate" | "danger";
   factors: RiskFactor[];
   explanation: string;
 }
@@ -21,7 +21,7 @@ export interface RiskFactor {
   name: string;
   impact: number;
   description: string;
-  category: 'financial' | 'legal' | 'market' | 'other';
+  category: "financial" | "legal" | "market" | "other";
 }
 
 // 예방 가이드 타입
@@ -29,7 +29,7 @@ export interface PreventionGuide {
   id: string;
   title: string;
   description: string;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   actions: string[];
   details: string;
   category: string;
@@ -38,7 +38,7 @@ export interface PreventionGuide {
 // 시뮬레이션 데이터 타입
 export interface SimulationData extends ContractData {
   score: number;
-  grade: 'safe' | 'moderate' | 'danger';
+  grade: "safe" | "moderate" | "danger";
 }
 
 // 리포트 데이터 타입
@@ -64,7 +64,7 @@ export interface RegionInfo {
   name: string;
   averageDeposit: number;
   averageMonthlyRent: number;
-  riskLevel: 'low' | 'medium' | 'high';
+  riskLevel: "low" | "medium" | "high";
 }
 
 // 주택 유형 타입
@@ -77,8 +77,8 @@ export interface HousingType {
 
 // 사용자 설정 타입
 export interface UserPreferences {
-  language: 'ko' | 'en';
-  theme: 'light' | 'dark' | 'auto';
+  language: "ko" | "en";
+  theme: "light" | "dark" | "auto";
   notifications: boolean;
   autoSave: boolean;
 }
@@ -112,14 +112,14 @@ export interface PaginationParams {
 // 정렬 옵션 타입
 export interface SortOption {
   field: string;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }
 
 // 필터 옵션 타입
 export interface FilterOption {
   field: string;
   value: unknown;
-  operator: 'eq' | 'gt' | 'lt' | 'gte' | 'lte' | 'contains' | 'in';
+  operator: "eq" | "gt" | "lt" | "gte" | "lte" | "contains" | "in";
 }
 
 // 검색 쿼리 타입

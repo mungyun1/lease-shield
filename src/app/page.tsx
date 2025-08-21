@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   Shield,
   BarChart3,
@@ -11,76 +11,76 @@ import {
   Users,
   Award,
   Zap,
-} from 'lucide-react';
-import Link from 'next/link';
+} from "lucide-react";
+import Link from "next/link";
 
 const features = [
   {
     icon: <Shield className="w-8 h-8" />,
-    title: 'AI 위험 진단',
+    title: "AI 위험 진단",
     description:
-      '계약 정보를 입력하면 AI가 실시간으로 위험도를 분석하고 등급을 매깁니다',
-    color: 'text-blue-600 bg-blue-100',
+      "계약 정보를 입력하면 AI가 실시간으로 위험도를 분석하고 등급을 매깁니다",
+    color: "text-blue-600 bg-blue-100",
   },
   {
     icon: <BarChart3 className="w-8 h-8" />,
-    title: 'LLM 기반 설명',
+    title: "LLM 기반 설명",
     description:
-      '복잡한 법적 개념을 쉽게 이해할 수 있도록 AI가 상세히 설명합니다',
-    color: 'text-green-600 bg-green-100',
+      "복잡한 법적 개념을 쉽게 이해할 수 있도록 AI가 상세히 설명합니다",
+    color: "text-green-600 bg-green-100",
   },
   {
     icon: <Lightbulb className="w-8 h-8" />,
-    title: '예방 가이드',
-    description: '위험 요인별로 구체적인 예방 조치와 행동 가이드를 제공합니다',
-    color: 'text-purple-600 bg-purple-100',
+    title: "예방 가이드",
+    description: "위험 요인별로 구체적인 예방 조치와 행동 가이드를 제공합니다",
+    color: "text-purple-600 bg-purple-100",
   },
   {
     icon: <TrendingUp className="w-8 h-8" />,
-    title: 'What-if 시뮬레이션',
+    title: "What-if 시뮬레이션",
     description:
-      '주요 변수를 조정하여 위험도 변화를 실시간으로 확인할 수 있습니다',
-    color: 'text-orange-600 bg-orange-100',
+      "주요 변수를 조정하여 위험도 변화를 실시간으로 확인할 수 있습니다",
+    color: "text-orange-600 bg-orange-100",
   },
   {
     icon: <CheckCircle className="w-8 h-8" />,
-    title: '리포트 생성',
+    title: "리포트 생성",
     description:
-      '진단 결과를 바탕으로 전문적인 리포트를 생성하고 PDF로 다운로드합니다',
-    color: 'text-red-600 bg-red-100',
+      "진단 결과를 바탕으로 전문적인 리포트를 생성하고 PDF로 다운로드합니다",
+    color: "text-red-600 bg-red-100",
   },
   {
     icon: <Zap className="w-8 h-8" />,
-    title: '실시간 분석',
+    title: "실시간 분석",
     description:
-      '계약 조건 변경 시 즉시 위험도가 재계산되어 최적의 선택을 도와줍니다',
-    color: 'text-indigo-600 bg-indigo-100',
+      "계약 조건 변경 시 즉시 위험도가 재계산되어 최적의 선택을 도와줍니다",
+    color: "text-indigo-600 bg-indigo-100",
   },
 ];
 
 const benefits = [
   {
-    title: '전문 지식 없이도',
-    description: '복잡한 법적 개념을 AI가 쉽게 설명해드립니다',
+    title: "전문 지식 없이도",
+    description: "복잡한 법적 개념을 AI가 쉽게 설명해드립니다",
     icon: <Users className="w-6 h-6" />,
   },
   {
-    title: '실시간 위험 평가',
-    description: '계약 조건 변경 시 즉시 위험도를 확인할 수 있습니다',
+    title: "실시간 위험 평가",
+    description: "계약 조건 변경 시 즉시 위험도를 확인할 수 있습니다",
     icon: <Award className="w-6 h-6" />,
   },
   {
-    title: '구체적 행동 가이드',
-    description: '이론이 아닌 실질적인 예방 조치를 제시합니다',
+    title: "구체적 행동 가이드",
+    description: "이론이 아닌 실질적인 예방 조치를 제시합니다",
     icon: <CheckCircle className="w-6 h-6" />,
   },
 ];
 
 const stats = [
-  { number: '95%', label: '정확도' },
-  { number: '3초', label: '분석 시간' },
-  { number: '24/7', label: '이용 가능' },
-  { number: '무료', label: '서비스' },
+  { number: "95%", label: "정확도" },
+  { number: "3초", label: "분석 시간" },
+  { number: "24/7", label: "이용 가능" },
+  { number: "무료", label: "서비스" },
 ];
 
 export default function LandingPage() {
@@ -154,10 +154,10 @@ export default function LandingPage() {
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-6xl font-bold text-gray-900 mb-6"
             >
-              전세 계약의{' '}
+              전세 계약의{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
                 위험을 미리
-              </span>{' '}
+              </span>{" "}
               알 수 있습니다
             </motion.h1>
 
@@ -331,22 +331,22 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                step: '1',
-                title: '계약 정보 입력',
+                step: "1",
+                title: "계약 정보 입력",
                 description:
-                  '지역, 주택 유형, 보증금, 대출금 등 기본 정보를 입력하세요',
+                  "지역, 주택 유형, 보증금, 대출금 등 기본 정보를 입력하세요",
               },
               {
-                step: '2',
-                title: 'AI 위험 분석',
+                step: "2",
+                title: "AI 위험 분석",
                 description:
-                  '입력된 정보를 바탕으로 AI가 실시간으로 위험도를 분석합니다',
+                  "입력된 정보를 바탕으로 AI가 실시간으로 위험도를 분석합니다",
               },
               {
-                step: '3',
-                title: '결과 및 가이드',
+                step: "3",
+                title: "결과 및 가이드",
                 description:
-                  '상세한 분석 결과와 구체적인 예방 가이드를 확인하세요',
+                  "상세한 분석 결과와 구체적인 예방 가이드를 확인하세요",
               },
             ].map((item, index) => (
               <motion.div

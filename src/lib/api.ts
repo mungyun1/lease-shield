@@ -5,10 +5,10 @@ import {
   SimulationData,
   ReportData,
   ApiResponse,
-} from '@/types';
+} from "@/types";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
 // API 클라이언트 설정
 const apiClient = {
@@ -20,7 +20,7 @@ const apiClient = {
 
     const config: RequestInit = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options.headers,
       },
       ...options,
@@ -36,24 +36,24 @@ const apiClient = {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error("API request failed:", error);
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : 'Unknown error occurred',
+          error instanceof Error ? error.message : "Unknown error occurred",
       };
     }
   },
 
   // GET 요청
   async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'GET' });
+    return this.request<T>(endpoint, { method: "GET" });
   },
 
   // POST 요청
   async post<T>(endpoint: string, data: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
     });
   },
@@ -61,14 +61,14 @@ const apiClient = {
   // PUT 요청
   async put<T>(endpoint: string, data: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   },
 
   // DELETE 요청
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'DELETE' });
+    return this.request<T>(endpoint, { method: "DELETE" });
   },
 };
 
@@ -79,7 +79,7 @@ export const riskAssessmentApi = {
     contractData: ContractData
   ): Promise<ApiResponse<RiskAnalysis>> {
     return apiClient.post<RiskAnalysis>(
-      '/risk-assessment/analyze',
+      "/risk-assessment/analyze",
       contractData
     );
   },
@@ -87,16 +87,16 @@ export const riskAssessmentApi = {
   // 위험 요인 상세 분석
   async getRiskFactors(
     contractData: ContractData
-  ): Promise<ApiResponse<RiskAnalysis['factors']>> {
-    return apiClient.post('/risk-assessment/factors', contractData);
+  ): Promise<ApiResponse<RiskAnalysis["factors"]>> {
+    return apiClient.post("/risk-assessment/factors", contractData);
   },
 
   // LLM 기반 위험 설명 생성
   async generateExplanation(
     contractData: ContractData,
-    riskFactors: RiskAnalysis['factors']
+    riskFactors: RiskAnalysis["factors"]
   ): Promise<ApiResponse<string>> {
-    return apiClient.post('/risk-assessment/explanation', {
+    return apiClient.post("/risk-assessment/explanation", {
       contractData,
       riskFactors,
     });
@@ -107,9 +107,9 @@ export const riskAssessmentApi = {
 export const preventionGuideApi = {
   // 위험 요인별 예방 가이드 조회
   async getPreventionGuides(
-    riskFactors: RiskAnalysis['factors']
+    riskFactors: RiskAnalysis["factors"]
   ): Promise<ApiResponse<PreventionGuide[]>> {
-    return apiClient.post('/prevention-guides', { riskFactors });
+    return apiClient.post("/prevention-guides", { riskFactors });
   },
 
   // 카테고리별 예방 가이드 조회
@@ -123,7 +123,7 @@ export const preventionGuideApi = {
 
   // 우선순위별 예방 가이드 조회
   async getGuidesByPriority(
-    priority: 'high' | 'medium' | 'low'
+    priority: "high" | "medium" | "low"
   ): Promise<ApiResponse<PreventionGuide[]>> {
     return apiClient.get<PreventionGuide[]>(
       `/prevention-guides/priority/${priority}`
@@ -138,7 +138,7 @@ export const simulationApi = {
     originalData: ContractData,
     changes: Partial<ContractData>
   ): Promise<ApiResponse<SimulationData>> {
-    return apiClient.post('/simulation/simulate', {
+    return apiClient.post("/simulation/simulate", {
       originalData,
       changes,
     });
@@ -149,7 +149,7 @@ export const simulationApi = {
     baseData: ContractData,
     scenario: string
   ): Promise<ApiResponse<SimulationData>> {
-    return apiClient.post('/simulation/scenario', {
+    return apiClient.post("/simulation/scenario", {
       baseData,
       scenario,
     });
@@ -165,7 +165,7 @@ export const simulationApi = {
       }>;
     }>
   > {
-    return apiClient.post('/simulation/optimize', contractData);
+    return apiClient.post("/simulation/optimize", contractData);
   },
 };
 
@@ -177,7 +177,7 @@ export const reportApi = {
     riskAnalysis: RiskAnalysis,
     recommendations: PreventionGuide[]
   ): Promise<ApiResponse<ReportData>> {
-    return apiClient.post('/reports/generate', {
+    return apiClient.post("/reports/generate", {
       contractData,
       riskAnalysis,
       recommendations,
@@ -215,8 +215,8 @@ export const regionApi = {
     ApiResponse<{
       averageDeposit: number;
       averageMonthlyRent: number;
-      riskLevel: 'low' | 'medium' | 'high';
-      marketTrend: 'rising' | 'stable' | 'declining';
+      riskLevel: "low" | "medium" | "high";
+      marketTrend: "rising" | "stable" | "declining";
     }>
   > {
     return apiClient.get(`/regions/${regionCode}/info`);
@@ -228,12 +228,12 @@ export const regionApi = {
       Array<{
         region: string;
         riskScore: number;
-        riskLevel: 'low' | 'medium' | 'high';
+        riskLevel: "low" | "medium" | "high";
         factors: string[];
       }>
     >
   > {
-    return apiClient.post('/regions/compare', { regions });
+    return apiClient.post("/regions/compare", { regions });
   },
 };
 
@@ -245,7 +245,7 @@ export const housingTypeApi = {
       description: string;
       typicalRiskFactors: string[];
       averageDeposit: number;
-      marketTrend: 'rising' | 'stable' | 'declining';
+      marketTrend: "rising" | "stable" | "declining";
     }>
   > {
     return apiClient.get(`/housing-types/${housingTypeCode}/info`);
@@ -257,12 +257,12 @@ export const housingTypeApi = {
       Array<{
         type: string;
         riskScore: number;
-        riskLevel: 'low' | 'medium' | 'high';
+        riskLevel: "low" | "medium" | "high";
         factors: string[];
       }>
     >
   > {
-    return apiClient.post('/housing-types/compare', { types });
+    return apiClient.post("/housing-types/compare", { types });
   },
 };
 
@@ -271,23 +271,23 @@ export const userPreferencesApi = {
   // 사용자 설정 조회
   async getUserPreferences(): Promise<
     ApiResponse<{
-      language: 'ko' | 'en';
-      theme: 'light' | 'dark' | 'auto';
+      language: "ko" | "en";
+      theme: "light" | "dark" | "auto";
       notifications: boolean;
       autoSave: boolean;
     }>
   > {
-    return apiClient.get('/user/preferences');
+    return apiClient.get("/user/preferences");
   },
 
   // 사용자 설정 업데이트
   async updateUserPreferences(preferences: {
-    language?: 'ko' | 'en';
-    theme?: 'light' | 'dark' | 'auto';
+    language?: "ko" | "en";
+    theme?: "light" | "dark" | "auto";
     notifications?: boolean;
     autoSave?: boolean;
   }): Promise<ApiResponse<{ message: string }>> {
-    return apiClient.put('/user/preferences', preferences);
+    return apiClient.put("/user/preferences", preferences);
   },
 };
 
@@ -309,7 +309,7 @@ export const validationApi = {
       }>;
     }>
   > {
-    return apiClient.post('/validation/contract', contractData);
+    return apiClient.post("/validation/contract", contractData);
   },
 
   // 위험도 점수 검증
@@ -319,7 +319,7 @@ export const validationApi = {
       message: string;
     }>
   > {
-    return apiClient.post('/validation/risk-score', { score });
+    return apiClient.post("/validation/risk-score", { score });
   },
 };
 
@@ -342,7 +342,7 @@ export const statisticsApi = {
       }>;
     }>
   > {
-    return apiClient.get('/statistics/overall');
+    return apiClient.get("/statistics/overall");
   },
 
   // 지역별 통계 조회
@@ -352,27 +352,27 @@ export const statisticsApi = {
         region: string;
         averageRiskScore: number;
         totalAssessments: number;
-        riskTrend: 'rising' | 'stable' | 'declining';
+        riskTrend: "rising" | "stable" | "declining";
       }>
     >
   > {
-    return apiClient.get('/statistics/regional');
+    return apiClient.get("/statistics/regional");
   },
 };
 
 // 에러 처리 유틸리티
 export const handleApiError = (error: unknown): string => {
-  if (error && typeof error === 'object' && 'response' in error) {
+  if (error && typeof error === "object" && "response" in error) {
     const response = (error as { response: { data: { message: string } } })
       .response;
     if (response?.data?.message) {
       return response.data.message;
     }
   }
-  if (error && typeof error === 'object' && 'message' in error) {
+  if (error && typeof error === "object" && "message" in error) {
     return (error as { message: string }).message;
   }
-  return '알 수 없는 오류가 발생했습니다.';
+  return "알 수 없는 오류가 발생했습니다.";
 };
 
 // API 상태 확인
