@@ -1,41 +1,76 @@
-// 클래스명 조합 유틸리티
-export const cn = (
-  ...classes: (string | undefined | null | false)[]
-): string => {
-  return classes.filter(Boolean).join(' ');
-};
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-// 날짜 포맷팅 유틸리티
-export const formatDate = (date: Date | string): string => {
-  const d = new Date(date);
-  return d.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-};
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
-// 숫자 포맷팅 유틸리티
-export const formatNumber = (num: number): string => {
-  return new Intl.NumberFormat('ko-KR').format(num);
-};
-
-// 통화 포맷팅 유틸리티
-export const formatCurrency = (amount: number, currency = 'KRW'): string => {
+export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('ko-KR', {
     style: 'currency',
-    currency,
+    currency: 'KRW',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(amount);
-};
+}
 
-// 디바운스 유틸리티
-export const debounce = <T extends (...args: any[]) => any>(
+export function formatNumber(num: number): string {
+  return new Intl.NumberFormat('ko-KR').format(num);
+}
+
+export function getRiskGrade(score: number): 'safe' | 'moderate' | 'danger' {
+  if (score <= 30) return 'safe';
+  if (score <= 70) return 'moderate';
+  return 'danger';
+}
+
+export function getGradeColor(grade: string): string {
+  switch (grade) {
+    case 'safe':
+      return 'text-green-600 bg-green-100';
+    case 'moderate':
+      return 'text-yellow-600 bg-yellow-100';
+    case 'danger':
+      return 'text-red-600 bg-red-100';
+    default:
+      return 'text-gray-600 bg-gray-100';
+  }
+}
+
+export function getGradeText(grade: string): string {
+  switch (grade) {
+    case 'safe':
+      return '안전';
+    case 'moderate':
+      return '보통';
+    case 'danger':
+      return '위험';
+    default:
+      return '알 수 없음';
+  }
+}
+
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
-): ((...args: Parameters<T>) => void) => {
+): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
-};
+}
+
+export function throttle<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle: boolean;
+  return (...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
