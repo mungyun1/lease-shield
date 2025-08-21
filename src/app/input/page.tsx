@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { MapPin, DollarSign, Shield } from "lucide-react";
 import { StepIndicator, PageHeader, StepForm } from "@/components/input";
 import { ContractData } from "@/types";
-import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -28,7 +28,9 @@ const steps = [
 ];
 
 export default function InputPage() {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [contractData, setContractData] = useState<ContractData>({
     region: "",
     housingType: "",
@@ -50,9 +52,27 @@ export default function InputPage() {
     }
   };
 
-  const handleSubmit = () => {
-    // TODO: API 호출하여 위험 진단 시작
-    console.log("계약 데이터:", contractData);
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+
+      // 로딩 상태를 위한 지연 (사용자 경험 향상)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // 계약 데이터를 로컬 스토리지에 저장 (결과 페이지에서 사용)
+      localStorage.setItem("contractData", JSON.stringify(contractData));
+
+      // 위험 진단 시작 시간 기록
+      localStorage.setItem("diagnosisStartTime", new Date().toISOString());
+
+      // 결과 페이지로 이동
+      router.push("/result");
+    } catch (error) {
+      console.error("위험 진단 시작 중 오류 발생:", error);
+      // 에러 처리 로직 추가 가능
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isStepValid = (): boolean => {
@@ -89,6 +109,7 @@ export default function InputPage() {
           onSubmit={handleSubmit}
           isStepValid={isStepValid()}
           totalSteps={steps.length}
+          isSubmitting={isSubmitting}
         />
       </div>
     </div>

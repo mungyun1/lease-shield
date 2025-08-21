@@ -13,6 +13,7 @@ interface NavigationButtonsProps {
   onNextStep: () => void;
   onSubmit: () => void;
   isStepValid: boolean;
+  isSubmitting?: boolean;
 }
 
 export default function NavigationButtons({
@@ -22,6 +23,7 @@ export default function NavigationButtons({
   onNextStep,
   onSubmit,
   isStepValid,
+  isSubmitting = false,
 }: NavigationButtonsProps) {
   return (
     <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-8 py-6 border-t border-gray-200">
@@ -78,11 +80,25 @@ export default function NavigationButtons({
             whileHover={{ scale: 1.02, x: 2 }}
             whileTap={{ scale: 0.98 }}
             onClick={onSubmit}
-            className="flex items-center px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+            disabled={isSubmitting}
+            className={`flex items-center px-8 py-3.5 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer ${
+              isSubmitting
+                ? "bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed opacity-70"
+                : "bg-gradient-to-r from-emerald-500 to-green-600 text-white hover:shadow-xl hover:from-emerald-600 hover:to-green-700"
+            }`}
           >
-            <CheckCircle className="w-4 h-4 mr-2" />
-            위험 진단 시작하기
-            <ArrowRight className="w-4 h-4 ml-2" />
+            {isSubmitting ? (
+              <>
+                <div className="w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                진단 중...
+              </>
+            ) : (
+              <>
+                <CheckCircle className="w-4 h-4 mr-2" />
+                위험 진단 시작하기
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </>
+            )}
           </motion.button>
         )}
       </div>

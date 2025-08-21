@@ -14,6 +14,7 @@ interface StepFormProps {
   onSubmit: () => void;
   isStepValid: boolean;
   totalSteps: number;
+  isSubmitting?: boolean;
 }
 
 export default function StepForm({
@@ -25,6 +26,7 @@ export default function StepForm({
   onSubmit,
   isStepValid,
   totalSteps,
+  isSubmitting = false,
 }: StepFormProps) {
   return (
     <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
@@ -67,6 +69,7 @@ export default function StepForm({
         onNextStep={onNextStep}
         onSubmit={onSubmit}
         isStepValid={isStepValid}
+        isSubmitting={isSubmitting}
       />
     </div>
   );
