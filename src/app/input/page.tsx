@@ -4,9 +4,6 @@ import { useState } from "react";
 import { MapPin, DollarSign, Shield } from "lucide-react";
 import {
   StepIndicator,
-  BasicInfoStep,
-  FinancialInfoStep,
-  LegalInfoStep,
   NavigationButtons,
   PageHeader,
   StepForm,
