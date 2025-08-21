@@ -28,7 +28,6 @@ export default function LandingPage() {
       <div className="relative z-10">
         <Header />
         <Hero />
-
         <Features />
         <Benefits />
         <HowItWorks />

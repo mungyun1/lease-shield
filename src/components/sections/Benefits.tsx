@@ -10,7 +10,6 @@ const benefits = [
     icon: <Users className="w-8 h-8" />,
     color: "from-blue-500 to-cyan-500",
     bgColor: "from-blue-50 to-cyan-50",
-    feature: "AI 번역기",
   },
   {
     title: "실시간 위험 평가",
@@ -18,7 +17,6 @@ const benefits = [
     icon: <Award className="w-8 h-8" />,
     color: "from-green-500 to-emerald-500",
     bgColor: "from-green-50 to-emerald-50",
-    feature: "실시간 분석",
   },
   {
     title: "구체적 행동 가이드",
@@ -26,7 +24,6 @@ const benefits = [
     icon: <CheckCircle className="w-8 h-8" />,
     color: "from-purple-500 to-pink-500",
     bgColor: "from-purple-50 to-pink-50",
-    feature: "실용적 조언",
   },
   {
     title: "전문가 수준 진단",
@@ -34,7 +31,6 @@ const benefits = [
     icon: <Shield className="w-8 h-8" />,
     color: "from-orange-500 to-red-500",
     bgColor: "from-orange-50 to-red-50",
-    feature: "전문가급",
   },
   {
     title: "빠른 처리 속도",
@@ -43,7 +39,6 @@ const benefits = [
     icon: <Zap className="w-8 h-8" />,
     color: "from-indigo-500 to-blue-500",
     bgColor: "from-indigo-50 to-blue-50",
-    feature: "초고속",
   },
   {
     title: "사용자 중심 설계",
@@ -52,7 +47,6 @@ const benefits = [
     icon: <Heart className="w-8 h-8" />,
     color: "from-pink-500 to-rose-500",
     bgColor: "from-pink-50 to-rose-50",
-    feature: "친화적 UI",
   },
 ];
 
@@ -103,10 +97,6 @@ export default function Benefits() {
                 className={`bg-gradient-to-br ${benefit.bgColor} rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform border border-gray-100/50 backdrop-blur-sm relative overflow-hidden h-full`}
               >
                 {/* 상단 배지 */}
-                <div className="inline-flex items-center gap-2 bg-white/80 text-gray-700 px-3 py-1 rounded-full text-xs font-medium mb-6 backdrop-blur-sm border border-gray-200/50">
-                  {benefit.feature}
-                </div>
-
                 {/* 아이콘 */}
                 <motion.div
                   className={`w-20 h-20 bg-gradient-to-br ${benefit.color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10`}
