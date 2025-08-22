@@ -98,14 +98,14 @@ export default function CTA() {
             </Link>
 
             <button className="group border-2 border-white/30 text-white px-10 py-5 rounded-2xl hover:border-white/50 hover:bg-white/10 transition-all font-semibold text-lg backdrop-blur-sm">
-              <span className="flex items-center">
-                데모 보기
+              <Link href="/guide" className="flex items-center">
+                예방 가이드 보기
                 <motion.div
                   className="ml-2 w-2 h-2 bg-yellow-300 rounded-full"
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
-              </span>
+              </Link>
             </button>
           </motion.div>
         </motion.div>

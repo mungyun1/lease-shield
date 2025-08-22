@@ -1,7 +1,6 @@
 "use client";
 
 import { Shield } from "lucide-react";
-import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -24,68 +23,19 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">서비스</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>
-                <Link
-                  href="/input"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  위험 진단
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/guide"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  예방 가이드
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/simulation"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  시뮬레이션
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/report"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  리포트
-                </Link>
-              </li>
+              <li>위험 진단</li>
+              <li>예방 가이드</li>
+              <li>시뮬레이션</li>
+              <li>리포트</li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">지원</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>
-                <Link
-                  href="#"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  고객센터
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  자주 묻는 질문
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  문의하기
-                </Link>
-              </li>
+              <li>고객센터</li>
+              <li>자주 묻는 질문</li>
+              <li>문의하기</li>
             </ul>
           </div>
         </div>
