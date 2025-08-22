@@ -31,6 +31,9 @@ export default function SimulationPage() {
     ...currentData,
   });
 
+  // 실시간 피드백 상태
+  const [activeFeedback, setActiveFeedback] = useState<string | null>(null);
+
   // 위험도 계산 함수 (실제로는 API 호출)
   const calculateRiskScore = (
     data: Omit<SimulationData, "score" | "grade">
@@ -65,6 +68,91 @@ export default function SimulationPage() {
     return { score, grade };
   };
 
+  // 변수별 영향도 분석 함수
+  const getVariableImpact = (
+    field: keyof Omit<SimulationData, "score" | "grade">
+  ) => {
+    const currentValue = currentData[field];
+    const originalValue = originalData[field];
+
+    if (field === "deposit") {
+      const diff = (currentValue as number) - (originalValue as number);
+      if (diff > 0) {
+        return {
+          type: "negative",
+          message: `보증금이 ${diff.toLocaleString()}만원 증가하여 위험도가 상승했습니다. 보증금을 낮추면 위험 점수가 개선되고 등급이 조정됩니다.`,
+          recommendation:
+            "보증금을 낮추거나 월세를 높여 총 비용을 조정해보세요.",
+        };
+      } else if (diff < 0) {
+        return {
+          type: "positive",
+          message: `보증금이 ${Math.abs(diff).toLocaleString()}만원 감소하여 위험도가 개선되었습니다!`,
+          recommendation:
+            "현재 설정이 안전합니다. 더 낮출 수 있다면 추가로 위험도를 줄일 수 있습니다.",
+        };
+      }
+    }
+
+    if (field === "loanAmount") {
+      const diff = (currentValue as number) - (originalValue as number);
+      if (diff > 0) {
+        return {
+          type: "negative",
+          message: `대출금이 ${diff.toLocaleString()}만원 증가하여 위험도가 상승했습니다. 대출금을 줄이면 위험 점수가 개선되고 등급이 조정됩니다.`,
+          recommendation:
+            "수입의 30% 이하로 대출금을 유지하는 것이 안전합니다.",
+        };
+      } else if (diff < 0) {
+        return {
+          type: "positive",
+          message: `대출금이 ${Math.abs(diff).toLocaleString()}만원 감소하여 위험도가 개선되었습니다!`,
+          recommendation:
+            "현재 설정이 안전합니다. 추가 대출이 필요하지 않다면 현재 상태를 유지하세요.",
+        };
+      }
+    }
+
+    if (field === "hasPriorityDebt") {
+      if (currentValue && !originalValue) {
+        return {
+          type: "negative",
+          message:
+            "선순위 채권이 추가되어 위험도가 크게 상승했습니다. 선순위 채권이 없는 계약을 선택하면 위험 점수가 크게 개선됩니다.",
+          recommendation: "가능하다면 선순위 채권이 없는 계약을 찾아보세요.",
+        };
+      } else if (!currentValue && originalValue) {
+        return {
+          type: "positive",
+          message: "선순위 채권이 제거되어 위험도가 크게 개선되었습니다!",
+          recommendation: "현재 설정이 매우 안전합니다. 이 상태를 유지하세요.",
+        };
+      }
+    }
+
+    if (field === "hasTenancyRegistration") {
+      if (currentValue && !originalValue) {
+        return {
+          type: "positive",
+          message:
+            "임차권 등기가 완료되어 위험도가 크게 개선되었습니다! 임차권 등기는 권리 보호에 매우 중요합니다.",
+          recommendation:
+            "임차권 등기를 반드시 완료하세요. 이는 가장 효과적인 예방 방법입니다.",
+        };
+      } else if (!currentValue && originalValue) {
+        return {
+          type: "negative",
+          message:
+            "임차권 등기가 미완료되어 위험도가 크게 상승했습니다. 임차권 등기를 완료하면 위험 점수가 크게 개선됩니다.",
+          recommendation:
+            "가능한 빨리 임차권 등기를 완료하세요. 이는 권리 보호의 핵심입니다.",
+        };
+      }
+    }
+
+    return null;
+  };
+
   const handleInputChange = (
     field: keyof Omit<SimulationData, "score" | "grade">,
     value: number | boolean
@@ -72,6 +160,14 @@ export default function SimulationPage() {
     const newData = { ...currentData, [field]: value };
     const { score, grade } = calculateRiskScore(newData);
     setCurrentData({ ...newData, score, grade });
+
+    // 실시간 피드백 표시
+    const impact = getVariableImpact(field);
+    if (impact) {
+      setActiveFeedback(impact.message);
+      // 5초 후 피드백 숨김
+      setTimeout(() => setActiveFeedback(null), 5000);
+    }
   };
 
   const resetToOriginal = () => {
@@ -130,6 +226,17 @@ export default function SimulationPage() {
                 변수 조정
               </h2>
 
+              {/* 실시간 피드백 표시 */}
+              {activeFeedback && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg"
+                >
+                  <p className="text-sm text-blue-800">{activeFeedback}</p>
+                </motion.div>
+              )}
+
               {/* 보증금 슬라이더 */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -149,6 +256,10 @@ export default function SimulationPage() {
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>1,000만원</span>
                   <span>20,000만원</span>
+                </div>
+                <div className="mt-2 text-xs text-gray-600">
+                  💡 보증금이 높을수록 위험도가 증가합니다. 보증금을 낮추면 위험
+                  점수가 개선되고 등급이 조정됩니다.
                 </div>
               </div>
 
@@ -172,6 +283,10 @@ export default function SimulationPage() {
                   <span>0만원</span>
                   <span>10,000만원</span>
                 </div>
+                <div className="mt-2 text-xs text-gray-600">
+                  💡 대출금이 높을수록 위험도가 증가합니다. 대출금을 줄이면 위험
+                  점수가 개선되고 등급이 조정됩니다.
+                </div>
               </div>
 
               {/* 체크박스 옵션들 */}
@@ -189,6 +304,10 @@ export default function SimulationPage() {
                     선순위 채권 존재
                   </span>
                 </label>
+                <div className="ml-7 text-xs text-gray-600">
+                  ⚠️ 선순위 채권이 있으면 위험도가 크게 증가합니다. 선순위
+                  채권이 없는 계약을 선택하면 위험 점수가 크게 개선됩니다.
+                </div>
 
                 <label className="flex items-center">
                   <input
@@ -206,6 +325,10 @@ export default function SimulationPage() {
                     임차권 등기 완료
                   </span>
                 </label>
+                <div className="ml-7 text-xs text-gray-600">
+                  ✅ 임차권 등기를 완료하면 위험도가 크게 감소합니다. 이는 권리
+                  보호에 가장 중요한 요소입니다.
+                </div>
               </div>
 
               {/* 액션 버튼들 */}
@@ -353,6 +476,18 @@ export default function SimulationPage() {
                       <TrendingDown className="w-5 h-5 mx-auto" />
                     )}
                   </div>
+                  {/* 점수 변화에 대한 구체적인 설명 추가 */}
+                  <div className="mt-2 text-xs text-gray-600">
+                    {currentData.score > originalData.score ? (
+                      <span className="text-red-600">
+                        ⚠️ 위험도 증가: 예방 조치가 필요합니다
+                      </span>
+                    ) : (
+                      <span className="text-green-600">
+                        ✅ 위험도 감소: 안전한 상태입니다
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800 mb-1">
@@ -362,6 +497,18 @@ export default function SimulationPage() {
                     ).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">보증금 변화</div>
+                  {/* 보증금 변화에 대한 구체적인 설명 추가 */}
+                  <div className="mt-2 text-xs text-gray-600">
+                    {currentData.deposit > originalData.deposit ? (
+                      <span className="text-red-600">
+                        ⚠️ 위험도 증가: 보증금을 낮추면 개선됩니다
+                      </span>
+                    ) : (
+                      <span className="text-green-600">
+                        ✅ 위험도 감소: 안전한 설정입니다
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800 mb-1">
@@ -373,6 +520,18 @@ export default function SimulationPage() {
                     ).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">대출금 변화</div>
+                  {/* 대출금 변화에 대한 구체적인 설명 추가 */}
+                  <div className="mt-2 text-xs text-gray-600">
+                    {currentData.loanAmount > originalData.loanAmount ? (
+                      <span className="text-red-600">
+                        ⚠️ 위험도 증가: 대출금을 줄이면 개선됩니다
+                      </span>
+                    ) : (
+                      <span className="text-green-600">
+                        ✅ 위험도 감소: 안전한 설정입니다
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -416,6 +575,7 @@ export default function SimulationPage() {
                   <li>• 보증금을 낮추면 위험도가 감소합니다</li>
                   <li>• 임차권 등기를 완료하면 위험도가 크게 감소합니다</li>
                   <li>• 선순위 채권이 없는 계약을 선택하세요</li>
+                  <li>• 대출금은 수입의 30% 이하로 유지하세요</li>
                 </ul>
               </div>
               <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
@@ -426,7 +586,43 @@ export default function SimulationPage() {
                   <li>• 보증금과 월세의 적절한 균형을 찾으세요</li>
                   <li>• 대출금은 수입의 30% 이하로 유지하세요</li>
                   <li>• 정기적으로 계약 조건을 재검토하세요</li>
+                  <li>• 임차권 등기는 반드시 완료하세요</li>
                 </ul>
+              </div>
+            </div>
+
+            {/* 구체적인 예시 섹션 추가 */}
+            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <h3 className="font-semibold text-yellow-800 mb-3 flex items-center">
+                💡 구체적인 예시
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 className="font-medium text-yellow-800 mb-2">
+                    보증금 조정 예시:
+                  </h4>
+                  <ul className="text-yellow-700 space-y-1">
+                    <li>• 5,000만원 → 3,000만원: 위험 점수 -10점, 등급 개선</li>
+                    <li>
+                      • 10,000만원 → 5,000만원: 위험 점수 -15점, 등급 크게 개선
+                    </li>
+                    <li>
+                      • 15,000만원 → 8,000만원: 위험 점수 -20점, 등급 대폭 개선
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-yellow-800 mb-2">
+                    임차권 등기 효과:
+                  </h4>
+                  <ul className="text-yellow-700 space-y-1">
+                    <li>
+                      • 등기 미완료 → 완료: 위험 점수 -15점, 등급 크게 개선
+                    </li>
+                    <li>• 선순위 채권 제거: 위험 점수 -20점, 등급 대폭 개선</li>
+                    <li>• 대출금 30% 감소: 위험 점수 -10점, 등급 개선</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
