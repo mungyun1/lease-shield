@@ -1,17 +1,20 @@
-// Layout components
-export * from "./layout";
-
-// UI components
+// UI Components
 export * from "./ui";
 
-// Section components
-export * from "./sections";
+// Layout Components
+export * from "./layout";
 
-// Input components
+// Input Components
 export * from "./input";
 
-// Result components
+// Result Components
 export * from "./result";
 
-// Simulation components
+// Simulation Components
 export * from "./simulation";
+
+// Section Components
+export * from "./sections";
+
+// Guide Components
+export * from "./guide";

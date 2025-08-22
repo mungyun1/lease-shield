@@ -258,6 +258,16 @@
   background: #94a3b8;
 }
 
+/* 스크롤바 숨김 */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 /* 부드러운 스크롤 */
 html {
   scroll-behavior: smooth;
