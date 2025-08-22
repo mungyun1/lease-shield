@@ -12,3 +12,6 @@ export * from "./input";
 
 // Result components
 export * from "./result";
+
+// Simulation components
+export * from "./simulation";
