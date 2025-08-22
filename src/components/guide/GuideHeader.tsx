@@ -1,8 +1,12 @@
 import { Shield, Target, Calendar, TrendingUp } from "lucide-react";
+import { NavigationButtons } from "@/components/ui";
 
 export default function GuideHeader() {
   return (
     <div className="text-center mb-12">
+      {/* 네비게이션 버튼들 */}
+      <NavigationButtons className="mb-8" />
+
       <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mb-6 shadow-lg">
         <Shield className="w-10 h-10 text-white" />
       </div>

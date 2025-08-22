@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, Target, Zap } from "lucide-react";
+import { NavigationButtons } from "@/components/ui";
 
 export default function SimulationHeader() {
   return (
@@ -8,6 +9,9 @@ export default function SimulationHeader() {
       animate={{ opacity: 1, y: 0 }}
       className="text-center mb-12"
     >
+      {/* 네비게이션 버튼들 */}
+      <NavigationButtons className="mb-8" />
+
       {/* 메인 제목 */}
       <motion.div
         initial={{ scale: 0.9 }}
