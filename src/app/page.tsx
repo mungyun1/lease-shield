@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Header,
   Hero,
@@ -8,7 +6,7 @@ import {
   HowItWorks,
   CTA,
   Footer,
-} from "@/components";
+} from "@/components/sections";
 
 export default function LandingPage() {
   return (
