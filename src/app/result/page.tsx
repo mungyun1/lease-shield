@@ -46,6 +46,7 @@ export default function ResultPage() {
   const [riskResult, setRiskResult] = useState<RiskAnalysis | null>(null);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [contractData, setContractData] = useState<ContractData | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     // 로컬 스토리지에서 계약 데이터 불러오기
@@ -85,9 +86,16 @@ export default function ResultPage() {
     }
   }, [riskResult]);
 
-  const handleDownloadReport = () => {
+  const handleDownloadReport = async () => {
     if (riskResult && contractData) {
-      downloadReport(riskResult, contractData);
+      setIsDownloading(true);
+      try {
+        await downloadReport(riskResult, contractData);
+      } catch (error) {
+        console.error("리포트 다운로드 오류:", error);
+      } finally {
+        setIsDownloading(false);
+      }
     }
   };
 
@@ -104,7 +112,10 @@ export default function ResultPage() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-200/10 to-pink-200/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      <div
+        className="relative z-10 max-w-7xl mx-auto p-4 sm:p-6 lg:p-8"
+        data-result-container
+      >
         {/* 헤더 */}
         <ResultHeader />
 
@@ -130,7 +141,7 @@ export default function ResultPage() {
           transition={{ delay: 0.7 }}
           className="mb-12"
         >
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8">
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mt-12">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
               <Shield className="w-7 h-7 mr-3 text-blue-600" />
               AI 위험 분석 설명
@@ -152,7 +163,10 @@ export default function ResultPage() {
         )}
 
         {/* 액션 버튼 */}
-        <ActionButtons onDownloadReport={handleDownloadReport} />
+        <ActionButtons
+          onDownloadReport={handleDownloadReport}
+          isDownloading={isDownloading}
+        />
       </div>
     </div>
   );

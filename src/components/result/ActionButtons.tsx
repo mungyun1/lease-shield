@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
-import { BookOpen, Play, Download } from "lucide-react";
+import { BookOpen, Play, Download, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface ActionButtonsProps {
   onDownloadReport: () => void;
+  isDownloading?: boolean;
 }
 
 export default function ActionButtons({
   onDownloadReport,
+  isDownloading = false,
 }: ActionButtonsProps) {
   const router = useRouter();
 
@@ -17,13 +19,14 @@ export default function ActionButtons({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8 }}
       className="text-center"
+      data-action-buttons
     >
       <div className="flex flex-col sm:flex-row gap-6 justify-center">
         <motion.button
           whileHover={{ scale: 1.05, y: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push("/guide")}
-          className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform"
+          className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform cursor-pointer"
         >
           <BookOpen className="w-6 h-6 mr-3" />
           예방 가이드 보기
@@ -33,20 +36,30 @@ export default function ActionButtons({
           whileHover={{ scale: 1.05, y: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push("/simulation")}
-          className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform"
+          className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform cursor-pointer"
         >
           <Play className="w-6 h-6 mr-3" />
           시뮬레이션 해보기
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.05, y: -5 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{
+            scale: isDownloading ? 1 : 1.05,
+            y: isDownloading ? 0 : -5,
+          }}
+          whileTap={{ scale: isDownloading ? 1 : 0.95 }}
           onClick={onDownloadReport}
-          className="flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform"
+          disabled={isDownloading}
+          className={`flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl font-semibold text-lg shadow-xl transition-all duration-300 transform cursor-pointer ${
+            isDownloading ? "opacity-75 cursor-not-allowed" : "hover:shadow-2xl"
+          }`}
         >
-          <Download className="w-6 h-6 mr-3" />
-          리포트 다운로드
+          {isDownloading ? (
+            <Loader2 className="w-6 h-6 mr-3 animate-spin" />
+          ) : (
+            <Download className="w-6 h-6 mr-3" />
+          )}
+          {isDownloading ? "PDF 생성 중..." : "리포트 다운로드"}
         </motion.button>
       </div>
     </motion.div>
