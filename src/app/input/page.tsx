@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, DollarSign, Shield } from "lucide-react";
+import { MapPin, DollarSign } from "lucide-react";
 import { StepIndicator, PageHeader, StepForm } from "@/components/input";
 import { ContractData } from "@/types";
 
@@ -19,12 +19,6 @@ const steps = [
     icon: DollarSign,
     color: "from-emerald-500 to-emerald-600",
   },
-  {
-    id: 3,
-    title: "법적 정보",
-    icon: Shield,
-    color: "from-purple-500 to-purple-600",
-  },
 ];
 
 export default function InputPage() {
@@ -34,10 +28,11 @@ export default function InputPage() {
   const [contractData, setContractData] = useState<ContractData>({
     region: "",
     housingType: "",
-    deposit: null,
-    loanAmount: null,
-    hasPriorityDebt: false,
-    hasTenancyRegistration: false,
+    seniorLienAmount: null,
+    jeonseDepositAmount: null,
+    propertyValue: null,
+    coverageStartYyyymm: "",
+    coverageEndYyyymm: "",
   });
 
   const nextStep = () => {
@@ -80,13 +75,13 @@ export default function InputPage() {
         return Boolean(contractData.region && contractData.housingType);
       case 2:
         return Boolean(
-          contractData.deposit &&
-            contractData.deposit > 0 &&
-            contractData.loanAmount &&
-            contractData.loanAmount > 0
+          contractData.jeonseDepositAmount &&
+            contractData.jeonseDepositAmount > 0 &&
+            contractData.propertyValue &&
+            contractData.propertyValue > 0 &&
+            contractData.coverageStartYyyymm &&
+            contractData.coverageEndYyyymm
         );
-      case 3:
-        return true; // 체크박스는 선택사항
       default:
         return false;
     }

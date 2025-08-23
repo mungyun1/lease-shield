@@ -38,21 +38,6 @@ export default function NavigationButtons({
           이전
         </motion.button>
 
-        {/* 진행률 표시 */}
-        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 order-first sm:order-none">
-          <span className="text-sm text-gray-500 font-medium">
-            {currentStep} / {totalSteps}
-          </span>
-          <div className="w-32 sm:w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-          </div>
-        </div>
-
         {/* 다음/제출 버튼 */}
         {currentStep < totalSteps ? (
           <motion.button

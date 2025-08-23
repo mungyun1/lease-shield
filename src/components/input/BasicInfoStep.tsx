@@ -39,7 +39,7 @@ export default function BasicInfoStep({
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-3 gap-6">
         <div className="space-y-4">
           <label className="block text-sm font-semibold text-gray-700 mb-3">
             <MapPin className="w-4 h-4 inline mr-2 text-blue-600" />
@@ -97,6 +97,27 @@ export default function BasicInfoStep({
             <option value="officetel">오피스텔</option>
             <option value="commercial">주상복합</option>
           </select>
+        </div>
+
+        <div className="space-y-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            <span className="w-4 h-4 inline mr-2 text-red-600">💰</span>
+            선순위채권
+          </label>
+          <input
+            type="number"
+            value={contractData.seniorLienAmount || ""}
+            onChange={(e) =>
+              setContractData({
+                ...contractData,
+                seniorLienAmount: e.target.value
+                  ? Number(e.target.value)
+                  : null,
+              })
+            }
+            placeholder="금액을 입력하세요"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
+          />
         </div>
       </div>
     </div>

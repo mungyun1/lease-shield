@@ -2,10 +2,11 @@
 export interface ContractData {
   region: string;
   housingType: string;
-  deposit: number | null;
-  loanAmount: number | null;
-  hasPriorityDebt: boolean;
-  hasTenancyRegistration: boolean;
+  seniorLienAmount: number | null;
+  jeonseDepositAmount: number | null;
+  propertyValue: number | null;
+  coverageStartYyyymm: string;
+  coverageEndYyyymm: string;
 }
 
 // 위험 분석 결과 타입

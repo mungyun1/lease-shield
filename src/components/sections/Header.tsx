@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="relative z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0">
+    <header className="z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* 로고 */}
