@@ -13,6 +13,7 @@ import {
   ResultHeader,
   LoadingSpinner,
   GlobalImportanceChart,
+  FeatureComparisonChart,
 } from "@/components/result";
 import {
   APIResponse,
@@ -89,7 +90,6 @@ export default function ResultPage() {
   if (!apiResponse) {
     return <LoadingSpinner />;
   }
-  console.log(apiResponse);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/50 relative overflow-hidden">
@@ -134,6 +134,18 @@ export default function ResultPage() {
         </div>
 
         {/* 막대 그래프 영역 */}
+        {apiResponse.explanations.featureHistograms && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mb-12"
+          >
+            <FeatureComparisonChart
+              data={apiResponse.explanations.featureHistograms}
+            />
+          </motion.div>
+        )}
 
         {/* AI 설명 */}
         <motion.div

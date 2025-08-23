@@ -6,3 +6,4 @@ export { default as ActionButtons } from "./ActionButtons";
 export { default as ResultHeader } from "./ResultHeader";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as GlobalImportanceChart } from "./GlobalImportanceChart";
+export { default as FeatureComparisonChart } from "./FeatureComparisonChart";
