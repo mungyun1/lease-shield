@@ -73,12 +73,9 @@ export default function ResultPage() {
             setApiResponse(parsedApiResponse);
 
             // API 응답을 기반으로 위험도 분석 데이터 생성
-            const apiBasedAnalysis = createApiBasedAnalysis(
-              parsedApiResponse,
-              parsedData
-            );
+            const apiBasedAnalysis = createApiBasedAnalysis(parsedApiResponse);
             setRiskResult(apiBasedAnalysis);
-          } catch (error) {
+          } catch {
             // API 응답 파싱 실패 시 기본 분석 수행
             const analysis = analyzeRisk(parsedData);
             setRiskResult(analysis);
@@ -88,7 +85,7 @@ export default function ResultPage() {
           const analysis = analyzeRisk(parsedData);
           setRiskResult(analysis);
         }
-      } catch (error) {
+      } catch {
         // 기본 데이터로 폴백
         const mockDataWithExplanation: RiskAnalysis = {
           ...mockData,
@@ -123,7 +120,7 @@ export default function ResultPage() {
       setIsDownloading(true);
       try {
         await downloadReport(riskResult, contractData);
-      } catch (error) {
+      } catch {
         // 리포트 다운로드 오류 처리
       } finally {
         setIsDownloading(false);
@@ -192,7 +189,7 @@ export default function ResultPage() {
             contractData={contractData}
             customRecommendations={
               apiResponse
-                ? generateCustomRecommendations(apiResponse, contractData)
+                ? generateCustomRecommendations(apiResponse)
                 : undefined
             }
           />

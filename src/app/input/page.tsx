@@ -77,7 +77,7 @@ export default function InputPage() {
 
         // API 응답을 로컬 스토리지에 저장
         localStorage.setItem("apiResponse", JSON.stringify(apiResponse));
-      } catch (apiError) {
+      } catch {
         // API 실패 시에도 계속 진행 (사용자 경험 향상)
       }
 
@@ -89,7 +89,7 @@ export default function InputPage() {
 
       // 결과 페이지로 이동
       router.push("/result");
-    } catch (error) {
+    } catch {
       // 에러 처리 로직 추가 가능
     } finally {
       setIsSubmitting(false);

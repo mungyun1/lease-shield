@@ -5,7 +5,14 @@ export * from "./riskAnalysis";
 export * from "./simulation";
 export * from "./addressUtils";
 export * from "./dateUtils";
-export * from "./apiAnalysis";
+// apiAnalysis에서 generateExplanation 함수를 제외하고 export
+export {
+  getRiskGrade as getApiRiskGrade,
+  generateRiskFactors,
+  generateCustomRecommendations,
+  createApiBasedAnalysis,
+  type APIResponse,
+} from "./apiAnalysis";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

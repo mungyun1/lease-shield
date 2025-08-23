@@ -1,4 +1,4 @@
-import { RiskAnalysis, ContractData } from "@/types";
+import { RiskAnalysis } from "@/types";
 
 // API 응답 데이터 타입 정의
 export interface APIResponse {
@@ -19,10 +19,7 @@ export const getRiskGrade = (
 };
 
 // API 응답을 기반으로 위험 요인 생성
-export const generateRiskFactors = (
-  apiData: APIResponse,
-  contractData: ContractData
-) => {
+export const generateRiskFactors = (apiData: APIResponse) => {
   const factors = [];
 
   // LTV 기반 위험 요인
@@ -66,10 +63,7 @@ export const generateRiskFactors = (
 };
 
 // API 응답을 기반으로 설명 생성
-export const generateExplanation = (
-  apiData: APIResponse,
-  contractData: ContractData
-) => {
+export const generateExplanation = (apiData: APIResponse) => {
   const riskLevel = getRiskGrade(apiData.riskScore);
   const probabilityPercent = (apiData.probability * 100).toFixed(1);
 
@@ -95,10 +89,7 @@ export const generateExplanation = (
 };
 
 // API 응답을 기반으로 맞춤형 권장사항 생성
-export const generateCustomRecommendations = (
-  apiData: APIResponse,
-  contractData: ContractData
-) => {
+export const generateCustomRecommendations = (apiData: APIResponse) => {
   const recommendations = [];
 
   // LTV 기반 권장사항
@@ -161,14 +152,11 @@ export const generateCustomRecommendations = (
 };
 
 // API 응답을 기반으로 위험도 분석 데이터 생성
-export const createApiBasedAnalysis = (
-  apiData: APIResponse,
-  contractData: ContractData
-): RiskAnalysis => {
+export const createApiBasedAnalysis = (apiData: APIResponse): RiskAnalysis => {
   return {
     score: apiData.riskScore, // 반올림 없이 원래 점수 그대로 사용
     grade: getRiskGrade(apiData.riskScore),
-    factors: generateRiskFactors(apiData, contractData),
-    explanation: generateExplanation(apiData, contractData),
+    factors: generateRiskFactors(apiData),
+    explanation: generateExplanation(apiData),
   };
 };
