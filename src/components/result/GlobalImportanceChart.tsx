@@ -39,8 +39,8 @@ export default function GlobalImportanceChart({
   ];
 
   // 도넛 차트를 위한 SVG 경로 계산
-  const radius = 120;
-  const strokeWidth = 60;
+  const radius = 150;
+  const strokeWidth = 80;
   const total = Object.values(data).reduce((a, b) => a + b, 0);
 
   let currentAngle = -90; // 12시 방향부터 시작
@@ -98,10 +98,10 @@ export default function GlobalImportanceChart({
         전역 중요도 분석
       </h3>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-row items-start gap-8">
         {/* 도넛 차트 */}
-        <div className="relative mb-8">
-          <svg width="300" height="300" viewBox="-150 -150 300 300">
+        <div className="relative">
+          <svg width="400" height="400" viewBox="-200 -200 400 400">
             {/* 배경 원 */}
             <circle
               cx="0"
@@ -150,25 +150,21 @@ export default function GlobalImportanceChart({
           </svg>
         </div>
 
-        {/* 범례 - 개선된 디자인 */}
-        <div className="grid grid-cols-2 gap-4 text-sm max-w-md">
+        <div className="grid grid-cols-1 gap-1 text-sm min-w-[200px]">
           {sortedData.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <div
-                className="w-5 h-5 rounded-md flex-shrink-0 shadow-sm"
+                className="w-4 h-4 rounded-sm flex-shrink-0 shadow-sm"
                 style={{ backgroundColor: colors[index % colors.length] }}
               />
-              <span className="text-gray-700 font-semibold min-w-0 flex-1">
+              <span className="text-gray-700 font-semibold min-w-0 flex-1 text-xs">
                 {item.name}
-              </span>
-              <span className="text-gray-500 text-xs font-medium">
-                {item.percentage}%
               </span>
             </motion.div>
           ))}
