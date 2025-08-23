@@ -133,6 +133,8 @@ export default function ResultPage() {
           )}
         </div>
 
+        {/* 막대 그래프 영역 */}
+
         {/* AI 설명 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

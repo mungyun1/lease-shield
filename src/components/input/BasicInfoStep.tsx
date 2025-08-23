@@ -96,20 +96,25 @@ export default function BasicInfoStep({
             <span className="w-4 h-4 inline mr-2 text-red-600">💰</span>
             선순위 채권 (만원)
           </label>
-          <input
-            type="number"
-            value={contractData.seniorLienAmount || ""}
-            onChange={(e) =>
-              setContractData({
-                ...contractData,
-                seniorLienAmount: e.target.value
-                  ? Number(e.target.value)
-                  : null,
-              })
-            }
-            placeholder="금액을 입력하세요"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
-          />
+          <div className="relative">
+            <input
+              type="number"
+              value={contractData.seniorLienAmount || ""}
+              onChange={(e) =>
+                setContractData({
+                  ...contractData,
+                  seniorLienAmount: e.target.value
+                    ? Number(e.target.value)
+                    : null,
+                })
+              }
+              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              placeholder="ex) 1000"
+            />
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">
+              ₩
+            </span>
+          </div>
         </div>
       </div>
     </div>
