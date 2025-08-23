@@ -18,8 +18,10 @@ export default function ChangeAnalysis({
   originalData,
 }: ChangeAnalysisProps) {
   const scoreChange = currentData.score - originalData.score;
-  const depositChange = currentData.deposit - originalData.deposit;
-  const loanChange = currentData.loanAmount - originalData.loanAmount;
+  const depositChange =
+    (currentData.deposit || 0) - (originalData.deposit || 0);
+  const loanChange =
+    (currentData.loanAmount || 0) - (originalData.loanAmount || 0);
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">

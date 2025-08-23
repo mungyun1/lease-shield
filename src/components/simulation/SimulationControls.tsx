@@ -65,7 +65,9 @@ export default function SimulationControls({
               보증금
             </label>
             <span className="text-lg font-bold text-blue-600">
-              {currentData.deposit.toLocaleString()}만원
+              {currentData.deposit
+                ? `${currentData.deposit.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="relative">
@@ -74,7 +76,7 @@ export default function SimulationControls({
               min="1000"
               max="20000"
               step="500"
-              value={currentData.deposit}
+              value={currentData.deposit || 0}
               onChange={(e) =>
                 onInputChange("deposit", parseInt(e.target.value))
               }
@@ -100,7 +102,9 @@ export default function SimulationControls({
               대출금
             </label>
             <span className="text-lg font-bold text-purple-600">
-              {currentData.loanAmount.toLocaleString()}만원
+              {currentData.loanAmount
+                ? `${currentData.loanAmount.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="relative">
@@ -109,7 +113,7 @@ export default function SimulationControls({
               min="0"
               max="10000"
               step="500"
-              value={currentData.loanAmount}
+              value={currentData.loanAmount || 0}
               onChange={(e) =>
                 onInputChange("loanAmount", parseInt(e.target.value))
               }

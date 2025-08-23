@@ -99,8 +99,8 @@ export const downloadReport = (
 계약 정보:
 - 지역: ${contractData.region}
 - 주택유형: ${contractData.housingType}
-- 보증금: ${contractData.deposit.toLocaleString()}만원
-- 대출금: ${contractData.loanAmount.toLocaleString()}만원
+- 보증금: ${contractData.deposit?.toLocaleString()}만원
+- 대출금: ${contractData.loanAmount?.toLocaleString()}만원
 - 선순위 채권: ${contractData.hasPriorityDebt ? "있음" : "없음"}
 - 임차권 등기: ${contractData.hasTenancyRegistration ? "등기됨" : "미등기"}
 

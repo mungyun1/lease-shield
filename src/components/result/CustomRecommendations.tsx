@@ -26,7 +26,7 @@ const generateCustomRecommendations = (data: ContractData) => {
   }> = [];
 
   // 보증금 관련 권고
-  if (data.deposit > 10000) {
+  if (data.deposit && data.deposit > 10000) {
     recommendations.push({
       title: "보증금 분할 납부 협의",
       description:
@@ -43,7 +43,7 @@ const generateCustomRecommendations = (data: ContractData) => {
   }
 
   // LTV(대출비율) 관련 권고
-  if (data.loanAmount > data.deposit * 0.7) {
+  if (data.loanAmount && data.deposit && data.loanAmount > data.deposit * 0.7) {
     recommendations.push({
       title: "대출비율(LTV) 조정",
       description: "보증금 대비 높은 대출금으로 인한 위험을 관리하세요",

@@ -53,13 +53,17 @@ export default function ComparisonCards({
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">보증금:</span>
             <span className="font-bold text-gray-800">
-              {originalData.deposit.toLocaleString()}만원
+              {originalData.deposit
+                ? `${originalData.deposit.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">대출금:</span>
             <span className="font-bold text-gray-800">
-              {originalData.loanAmount.toLocaleString()}만원
+              {originalData.loanAmount
+                ? `${originalData.loanAmount.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -140,13 +144,17 @@ export default function ComparisonCards({
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">보증금:</span>
             <span className="font-bold text-gray-800">
-              {currentData.deposit.toLocaleString()}만원
+              {currentData.deposit
+                ? `${currentData.deposit.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">대출금:</span>
             <span className="font-bold text-gray-800">
-              {currentData.loanAmount.toLocaleString()}만원
+              {currentData.loanAmount
+                ? `${currentData.loanAmount.toLocaleString()}만원`
+                : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
