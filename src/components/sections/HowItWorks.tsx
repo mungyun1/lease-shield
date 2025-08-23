@@ -50,10 +50,10 @@ export default function HowItWorks() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
             간단한{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              3단계로 위험 진단
+              3단계 위험 진단
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">

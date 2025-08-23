@@ -13,14 +13,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight"
+            className="text-3xl  md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight"
           >
-            전세 계약의{" "}
+            전세 계약의 <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative">
-              위험을 미리
+              위험을 예측
             </span>
-            <br />
-            예측해 보세요
+            해보세요
           </motion.h1>
 
           <motion.div

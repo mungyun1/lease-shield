@@ -86,8 +86,8 @@ export default function Features() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            AI가 제공하는{" "}
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            AI가 제공하는 <br className="sm:hidden" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
               6가지 핵심 기능
             </span>

@@ -43,7 +43,7 @@ export default function CTA() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
+          <h2 className="text-3xl md:text-6xl font-bold text-white mb-8 leading-tight">
             지금 바로{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
               시작하세요
@@ -51,7 +51,7 @@ export default function CTA() {
           </h2>
 
           <p className="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
-            무료로 제공되는 AI 위험 진단으로{" "}
+            AI 위험 진단으로{" "}
             <span className="font-semibold text-white">안전한 전세 계약</span>을
             체결하세요
           </p>

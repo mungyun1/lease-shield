@@ -70,10 +70,10 @@ export default function Benefits() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            LeaseShield를 선택해야 하는{" "}
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            LeaseShield의 <br className="sm:hidden" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              6가지 이유
+              6가지 장점
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
