@@ -3,12 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Shield } from "lucide-react";
-import { RiskAnalysis, ContractData } from "@/types";
-import {
-  analyzeRisk,
-  downloadReport,
-  generateExplanation,
-} from "@/utils/riskAnalysis";
+import { ContractData } from "@/types";
+import { downloadReport } from "@/utils/riskAnalysis";
 import {
   ContractSummary,
   RiskScoreCard,
@@ -23,81 +19,39 @@ import {
   APIResponse,
   createApiBasedAnalysis,
   generateCustomRecommendations,
+  getRiskGrade,
+  generateRiskFactors,
+  generateExplanation,
 } from "@/utils/apiAnalysis";
 
-const mockData: Omit<RiskAnalysis, "explanation"> = {
-  score: 75,
-  grade: "moderate",
-  factors: [
-    {
-      name: "보증금",
-      impact: 30,
-      description: "지역 평균 대비 높음",
-      category: "financial",
-    },
-    {
-      name: "선순위 채권",
-      impact: 25,
-      description: "담보권 설정으로 인한 위험",
-      category: "legal",
-    },
-    {
-      name: "대출금",
-      impact: 20,
-      description: "적정 수준",
-      category: "financial",
-    },
-  ],
-};
-
 export default function ResultPage() {
-  const [riskResult, setRiskResult] = useState<RiskAnalysis | null>(null);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [contractData, setContractData] = useState<ContractData | null>(null);
   const [apiResponse, setApiResponse] = useState<APIResponse | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
-    // 로컬 스토리지에서 계약 데이터와 API 응답 불러오기
     const savedContractData = localStorage.getItem("contractData");
     const savedApiResponse = localStorage.getItem("apiResponse");
 
-    console.log("savedApiResponse", savedApiResponse);
     if (savedContractData) {
       try {
         const parsedData = JSON.parse(savedContractData);
         setContractData(parsedData);
 
-        // API 응답이 있으면 사용, 없으면 기본 분석 수행
         if (savedApiResponse) {
           try {
             const parsedApiResponse = JSON.parse(savedApiResponse);
-
             setApiResponse(parsedApiResponse);
-
-            // API 응답을 기반으로 위험도 분석 데이터 생성
-            const apiBasedAnalysis = createApiBasedAnalysis(parsedApiResponse);
-            setRiskResult(apiBasedAnalysis);
           } catch (error) {
             console.error("API 응답 파싱 실패:", error);
-            // API 응답 파싱 실패 시 기본 분석 수행
-            const analysis = analyzeRisk(parsedData);
-            setRiskResult(analysis);
           }
-        } else {
-          console.log("저장된 API 응답이 없음");
-          // API 응답이 없으면 기본 분석 수행
-          const analysis = analyzeRisk(parsedData);
-          setRiskResult(analysis);
         }
       } catch (error) {
         console.error("계약 데이터 파싱 실패:", error);
-        // 기본 데이터로 폴백
-        const mockDataWithExplanation: RiskAnalysis = {
-          ...mockData,
-          explanation: generateExplanation(mockData.score, mockData.factors),
-        };
-        setRiskResult(mockDataWithExplanation);
+        // 계약 데이터가 없으면 홈으로 리다이렉트
+        window.location.href = "/";
+        return;
       }
     } else {
       // 계약 데이터가 없으면 홈으로 리다이렉트
@@ -107,45 +61,34 @@ export default function ResultPage() {
   }, []);
 
   useEffect(() => {
-    if (riskResult) {
+    if (apiResponse?.riskScore) {
       const timer = setInterval(() => {
         setAnimatedScore((prev) => {
-          if (prev >= riskResult.score) {
+          if (prev >= apiResponse.riskScore) {
             clearInterval(timer);
-            return riskResult.score;
+            return apiResponse.riskScore;
           }
           return prev + 1;
         });
       }, 20);
       return () => clearInterval(timer);
     }
-  }, [riskResult]);
-
-  // apiResponse 상태 변화 추적
-  useEffect(() => {
-    console.log("apiResponse 상태 변화:", apiResponse);
-    if (apiResponse?.globalImportance) {
-      console.log(
-        "globalImportance 데이터 확인:",
-        apiResponse.globalImportance
-      );
-    }
   }, [apiResponse]);
 
   const handleDownloadReport = async () => {
-    if (riskResult && contractData) {
+    if (apiResponse && contractData) {
       setIsDownloading(true);
       try {
-        await downloadReport(riskResult, contractData);
+        const riskAnalysis = createApiBasedAnalysis(apiResponse);
+        await downloadReport(riskAnalysis, contractData);
       } catch {
-        // 리포트 다운로드 오류 처리
       } finally {
         setIsDownloading(false);
       }
     }
   };
 
-  if (!riskResult) {
+  if (!apiResponse) {
     return <LoadingSpinner />;
   }
 
@@ -171,24 +114,26 @@ export default function ResultPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
           {/* 위험 점수 카드 */}
           <RiskScoreCard
-            score={riskResult.score}
-            grade={riskResult.grade}
+            score={apiResponse.riskScore}
+            grade={getRiskGrade(apiResponse.riskScore)}
             animatedScore={animatedScore}
           />
 
           {/* 위험 요인 분석 */}
-          <RiskFactorsAnalysis factors={riskResult.factors} />
+          <RiskFactorsAnalysis factors={generateRiskFactors(apiResponse)} />
         </div>
 
         {/* 전역 중요도 분석 차트 */}
-        {apiResponse?.globalImportance && (
+        {apiResponse?.explanations?.globalImportance && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
             className="mt-12"
           >
-            <GlobalImportanceChart data={apiResponse.globalImportance} />
+            <GlobalImportanceChart
+              data={apiResponse.explanations.globalImportance}
+            />
           </motion.div>
         )}
 
@@ -206,7 +151,7 @@ export default function ResultPage() {
             </h2>
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 rounded-2xl">
               <p className="text-gray-700 leading-relaxed text-lg">
-                {riskResult.explanation}
+                {generateExplanation(apiResponse)}
               </p>
             </div>
           </div>

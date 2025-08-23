@@ -5,11 +5,29 @@ export interface APIResponse {
   probability: number;
   riskScore: number;
   finalPrice: number;
-  midLtv: number;
+  ltv: number;
   modelVersion: string;
-  globalImportance?: {
-    [key: string]: number;
+  explanations: {
+    topContributors: TopContributor[];
+    globalImportance: { [key: string]: number };
+    featureHistograms: { [key: string]: FeatureHistogram };
   };
+}
+
+export interface TopContributor {
+  feature: string;
+  percent: number;
+  direction: "up" | "down";
+  value: number;
+  mean: number;
+}
+
+export interface FeatureHistogram {
+  binEdges: number[];
+  binCounts: number[];
+  currentValue: number;
+  mean: number;
+  currentBinIndex: number;
 }
 
 // 위험도 등급 계산 (0-100 스케일 기준)
@@ -29,23 +47,23 @@ export const generateRiskFactors = (apiData: APIResponse) => {
   const factors = [];
 
   // 안전한 값 추출 (undefined 체크)
-  const midLtv = apiData.midLtv ?? 0;
+  const ltv = apiData.ltv ?? 0;
   const riskScore = apiData.riskScore ?? 0;
   const probability = apiData.probability ?? 0;
 
   // LTV 기반 위험 요인
-  if (midLtv > 3) {
+  if (ltv > 3) {
     factors.push({
       name: "LTV 비율",
       impact: 35,
-      description: `LTV ${midLtv.toFixed(2)}로 높은 수준`,
+      description: `LTV ${ltv.toFixed(2)}로 높은 수준`,
       category: "financial" as const,
     });
-  } else if (midLtv > 2) {
+  } else if (ltv > 2) {
     factors.push({
       name: "LTV 비율",
       impact: 25,
-      description: `LTV ${midLtv.toFixed(2)}로 보통 수준`,
+      description: `LTV ${ltv.toFixed(2)}로 보통 수준`,
       category: "financial" as const,
     });
   }
@@ -78,7 +96,7 @@ export const generateExplanation = (apiData: APIResponse) => {
   // 안전한 값 추출 (undefined 체크)
   const riskScore = apiData.riskScore ?? 0;
   const probability = apiData.probability ?? 0;
-  const midLtv = apiData.midLtv ?? 0;
+  const ltv = apiData.ltv ?? 0;
   const finalPrice = apiData.finalPrice ?? 0;
   const modelVersion = apiData.modelVersion ?? "v1.0";
 
@@ -95,9 +113,9 @@ export const generateExplanation = (apiData: APIResponse) => {
     explanation += `이는 높은 위험도를 의미하며, 위험 발생 확률은 ${probabilityPercent}%입니다. `;
   }
 
-  explanation += `LTV 비율은 ${midLtv.toFixed(2)}이며, 권장 보험료는 ${finalPrice.toLocaleString()}원입니다. `;
+  explanation += `LTV 비율은 ${ltv.toFixed(2)}이며, 권장 보험료는 ${finalPrice.toLocaleString()}원입니다. `;
 
-  if (midLtv > 3) {
+  if (ltv > 3) {
     explanation += "LTV가 높아 추가적인 관리가 필요합니다.";
   } else {
     explanation += "현재 수준의 관리로 충분합니다.";
@@ -111,16 +129,16 @@ export const generateCustomRecommendations = (apiData: APIResponse) => {
   const recommendations = [];
 
   // 안전한 값 추출 (undefined 체크)
-  const midLtv = apiData.midLtv ?? 0;
+  const ltv = apiData.ltv ?? 0;
   const riskScore = apiData.riskScore ?? 0;
   const probability = apiData.probability ?? 0;
   const finalPrice = apiData.finalPrice ?? 0;
 
   // LTV 기반 권장사항
-  if (midLtv > 3) {
+  if (ltv > 3) {
     recommendations.push({
       title: "LTV 비율 관리",
-      description: `현재 LTV ${midLtv.toFixed(2)}로 높은 수준입니다.`,
+      description: `현재 LTV ${ltv.toFixed(2)}로 높은 수준입니다.`,
       actions: [
         "추가 담보 제공 고려",
         "대출금 상환 계획 수립",
