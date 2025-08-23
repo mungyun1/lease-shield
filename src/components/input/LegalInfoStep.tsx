@@ -30,7 +30,7 @@ export default function LegalInfoStep({
                   style={{ animationDelay: "0.4s" }}
                 ></div>
               </div>
-              <span className="text-sm font-semibold text-gray-700 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <span className="text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 법적 정보를 확인하고 진단을 시작하세요
               </span>
             </div>

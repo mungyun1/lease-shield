@@ -5,3 +5,4 @@ export { default as LegalInfoStep } from "./LegalInfoStep";
 export { default as NavigationButtons } from "./NavigationButtons";
 export { default as PageHeader } from "./PageHeader";
 export { default as StepForm } from "./StepForm";
+export { default as AIAnalysisUI } from "./AIAnalysisUI";

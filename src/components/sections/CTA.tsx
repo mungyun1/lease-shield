@@ -70,7 +70,7 @@ export default function CTA() {
             </div>
             <div className="flex items-center gap-2 text-blue-100">
               <Zap className="w-5 h-5 text-yellow-300" />
-              <span className="text-sm font-medium">3초 내 완료</span>
+              <span className="text-sm font-medium">빠른 진단</span>
             </div>
             <div className="flex items-center gap-2 text-blue-100">
               <Sparkles className="w-5 h-5 text-purple-300" />
@@ -97,7 +97,7 @@ export default function CTA() {
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             </Link>
 
-            <button className="group border-2 border-white/30 text-white px-10 py-5 rounded-2xl hover:border-white/50 hover:bg-white/10 transition-all font-semibold text-lg backdrop-blur-sm">
+            <button className="cursor-pointer group border-2 border-white/30 text-white px-10 py-5 rounded-2xl hover:border-white/50 hover:bg-white/10 transition-all font-semibold text-lg backdrop-blur-sm">
               <Link href="/guide" className="flex items-center">
                 예방 가이드 보기
                 <motion.div

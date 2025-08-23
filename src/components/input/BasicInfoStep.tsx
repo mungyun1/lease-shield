@@ -31,7 +31,7 @@ export default function BasicInfoStep({
                   style={{ animationDelay: "0.4s" }}
                 ></div>
               </div>
-              <span className="text-sm font-semibold text-gray-700 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 지역과 주택 유형을 선택해주세요
               </span>
             </div>
@@ -53,7 +53,7 @@ export default function BasicInfoStep({
                 region: e.target.value,
               })
             }
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
+            className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
           >
             <option value="">지역을 선택하세요</option>
             <option value="seoul">서울</option>
@@ -82,7 +82,7 @@ export default function BasicInfoStep({
                 housingType: e.target.value,
               })
             }
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
+            className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
           >
             <option value="">주택 유형을 선택하세요</option>
             <option value="apartment">아파트</option>

@@ -29,7 +29,7 @@ export default function FinancialInfoStep({
                   style={{ animationDelay: "0.4s" }}
                 ></div>
               </div>
-              <span className="text-sm font-semibold text-gray-700 bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+              <span className="text-sm font-semibold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
                 보증금과 대출 금액을 입력해주세요
               </span>
             </div>
