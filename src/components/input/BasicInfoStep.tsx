@@ -94,7 +94,7 @@ export default function BasicInfoStep({
 
           <label className="block text-sm font-semibold text-gray-700 mb-3">
             <span className="w-4 h-4 inline mr-2 text-red-600">💰</span>
-            선순위채권
+            선순위 채권 (만원)
           </label>
           <input
             type="number"

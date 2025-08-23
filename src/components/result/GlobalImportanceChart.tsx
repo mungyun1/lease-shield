@@ -3,26 +3,30 @@
 import { motion } from "framer-motion";
 import { PieChart } from "lucide-react";
 
-interface GlobalImportanceData {
-  [key: string]: number;
+interface TopContributor {
+  feature: string;
+  percent: number;
+  direction: string;
+  value: number;
+  mean: number;
 }
 
 interface GlobalImportanceChartProps {
-  data: GlobalImportanceData;
+  data: TopContributor[];
 }
 
 export default function GlobalImportanceChart({
   data,
 }: GlobalImportanceChartProps) {
   // 데이터를 배열로 변환하고 정렬
-  const sortedData = Object.entries(data)
-    .map(([key, value]) => ({
-      name: key,
-      value: value,
-      percentage: (
-        (value / Object.values(data).reduce((a, b) => a + b, 0)) *
-        100
-      ).toFixed(2),
+  const sortedData = data
+    .map((item) => ({
+      name: item.feature,
+      value: item.percent,
+      percentage: item.percent.toFixed(1),
+      direction: item.direction,
+      originalValue: item.value,
+      mean: item.mean,
     }))
     .sort((a, b) => b.value - a.value);
 
@@ -41,7 +45,7 @@ export default function GlobalImportanceChart({
   // 도넛 차트를 위한 SVG 경로 계산
   const radius = 150;
   const strokeWidth = 80;
-  const total = Object.values(data).reduce((a, b) => a + b, 0);
+  const total = data.reduce((sum, item) => sum + item.percent, 0);
 
   let currentAngle = -90; // 12시 방향부터 시작
   const paths: Array<{
@@ -52,6 +56,7 @@ export default function GlobalImportanceChart({
     percentage: string;
     startAngle: number;
     endAngle: number;
+    direction: string;
   }> = [];
 
   sortedData.forEach((item, index) => {
@@ -76,6 +81,7 @@ export default function GlobalImportanceChart({
       percentage: item.percentage,
       startAngle,
       endAngle,
+      direction: item.direction,
     });
 
     currentAngle += angle;
@@ -95,7 +101,7 @@ export default function GlobalImportanceChart({
     <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-white/30 p-8">
       <h3 className="text-2xl font-bold text-gray-800 mb-8 flex items-center justify-center">
         <PieChart className="w-7 h-7 mr-3 text-blue-600" />
-        전역 중요도 분석
+        주요 위험 요인 분석
       </h3>
 
       <div className="flex flex-row items-start gap-8">

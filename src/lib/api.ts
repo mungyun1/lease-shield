@@ -6,6 +6,7 @@ import {
   ReportData,
   ApiResponse,
 } from "@/types";
+import { RiskScoreResponse } from "../types";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
@@ -391,12 +392,12 @@ export const checkApiHealth = async (): Promise<boolean> => {
 export async function calculateRiskScore(data: {
   region: string;
   housingType: string;
-  seniorLienAmount: number | null;
-  jeonseDepositAmount: number | null;
-  propertyValue: number | null;
+  seniorLienAmount: number;
+  jeonseDepositAmount: number;
+  propertyValue: number;
   coverageStartYyyymm: string;
   coverageEndYyyymm: string;
-}) {
+}): Promise<RiskScoreResponse> {
   try {
     console.log(
       "process.env.NEXT_PUBLIC_API_KE",

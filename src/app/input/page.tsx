@@ -71,10 +71,9 @@ export default function InputPage() {
         coverageEndYyyymm: contractData.coverageEndYyyymm,
       };
 
-      // API 요청 보내기
       try {
         const apiResponse = await calculateRiskScore(apiRequestData);
-
+        console.log("인풋 결과:", apiResponse);
         localStorage.setItem("apiResponse", JSON.stringify(apiResponse));
       } catch {}
 

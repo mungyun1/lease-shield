@@ -9,7 +9,7 @@ export interface APIResponse {
   modelVersion: string;
   explanations: {
     topContributors: TopContributor[];
-    globalImportance: { [key: string]: number };
+    globalImportanceTop3: { [key: string]: number };
     featureHistograms: { [key: string]: FeatureHistogram };
   };
 }

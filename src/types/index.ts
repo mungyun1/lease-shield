@@ -62,6 +62,36 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
+// 위험 점수 계산 API 응답 타입
+export interface RiskScoreResponse {
+  probability: number;
+  riskScore: number;
+  finalPrice: number;
+  ltv: number;
+  modelVersion: string;
+  explanations: {
+    topContributors: Array<{
+      feature: string;
+      percent: number;
+      direction: string;
+      value: number;
+      mean: number;
+    }>;
+    featureHistograms: {
+      [key: string]: {
+        binEdges: number[];
+        binCounts: number[];
+        currentValue: number;
+        mean: number;
+        currentBinIndex: number;
+      };
+    };
+    globalImportanceTop3: {
+      [key: string]: number;
+    };
+  };
+}
+
 // 지역 정보 타입
 export interface RegionInfo {
   code: string;

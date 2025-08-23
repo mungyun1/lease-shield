@@ -89,6 +89,7 @@ export default function ResultPage() {
   if (!apiResponse) {
     return <LoadingSpinner />;
   }
+  console.log(apiResponse);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/50 relative overflow-hidden">
@@ -118,7 +119,7 @@ export default function ResultPage() {
           />
 
           {/* 전역 중요도 분석 차트 */}
-          {apiResponse?.explanations?.globalImportance && (
+          {apiResponse.explanations.topContributors && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -126,7 +127,7 @@ export default function ResultPage() {
               className="lg:col-span-2"
             >
               <GlobalImportanceChart
-                data={apiResponse.explanations.globalImportance}
+                data={apiResponse.explanations.topContributors}
               />
             </motion.div>
           )}
