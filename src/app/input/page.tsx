@@ -55,13 +55,18 @@ export default function InputPage() {
     try {
       setIsSubmitting(true);
 
-      // API 요청용 데이터 필터링
       const apiRequestData = {
         region: contractData.region,
         housingType: contractData.housingType,
-        seniorLienAmount: contractData.seniorLienAmount,
-        jeonseDepositAmount: contractData.jeonseDepositAmount,
-        propertyValue: contractData.propertyValue,
+        seniorLienAmount: contractData.seniorLienAmount
+          ? contractData.seniorLienAmount * 10000
+          : 0,
+        jeonseDepositAmount: contractData.jeonseDepositAmount
+          ? contractData.jeonseDepositAmount * 10000
+          : 0,
+        propertyValue: contractData.propertyValue
+          ? contractData.propertyValue * 10000
+          : 0,
         coverageStartYyyymm: contractData.coverageStartYyyymm,
         coverageEndYyyymm: contractData.coverageEndYyyymm,
       };

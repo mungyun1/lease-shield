@@ -22,6 +22,7 @@ const getGradeIcon = (grade: string) => {
 };
 
 export default function RiskScoreCard({
+  score,
   grade,
   animatedScore,
 }: RiskScoreCardProps) {
@@ -84,9 +85,8 @@ export default function RiskScoreCard({
                   }}
                   className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
                 >
-                  {animatedScore}
+                  {score}
                 </motion.div>
-                <div className="text-sm text-gray-500 font-medium">점</div>
               </div>
             </div>
           </div>

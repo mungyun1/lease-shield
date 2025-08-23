@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Shield } from "lucide-react";
 import { RiskAnalysis, ContractData } from "@/types";
-import { analyzeRisk, downloadReport } from "@/utils/riskAnalysis";
+import {
+  analyzeRisk,
+  downloadReport,
+  generateExplanation,
+} from "@/utils/riskAnalysis";
 import {
   ContractSummary,
   RiskScoreCard,
@@ -13,7 +17,6 @@ import {
   ActionButtons,
   ResultHeader,
   LoadingSpinner,
-  APIResponseDisplay,
 } from "@/components/result";
 import {
   APIResponse,
@@ -21,7 +24,7 @@ import {
   generateCustomRecommendations,
 } from "@/utils/apiAnalysis";
 
-const mockData: RiskAnalysis = {
+const mockData: Omit<RiskAnalysis, "explanation"> = {
   score: 75,
   grade: "moderate",
   factors: [
@@ -44,8 +47,6 @@ const mockData: RiskAnalysis = {
       category: "financial",
     },
   ],
-  explanation:
-    "현재 계약은 보증금이 지역 평균 대비 높고, 선순위 채권이 존재하여 중간 정도의 위험도를 보입니다. 임차권 등기를 통해 일부 위험을 완화할 수 있습니다.",
 };
 
 export default function ResultPage() {
@@ -89,7 +90,11 @@ export default function ResultPage() {
         }
       } catch (error) {
         // 기본 데이터로 폴백
-        setRiskResult(mockData);
+        const mockDataWithExplanation: RiskAnalysis = {
+          ...mockData,
+          explanation: generateExplanation(mockData.score, mockData.factors),
+        };
+        setRiskResult(mockDataWithExplanation);
       }
     } else {
       // 계약 데이터가 없으면 홈으로 리다이렉트
@@ -148,18 +153,6 @@ export default function ResultPage() {
 
         {/* 계약 정보 요약 */}
         {contractData && <ContractSummary contractData={contractData} />}
-
-        {/* API 응답 데이터 표시 섹션 */}
-        {apiResponse && (
-          <APIResponseDisplay
-            apiResponse={apiResponse}
-            getRiskGrade={(score) => {
-              if (score <= 3) return "safe";
-              if (score <= 6) return "moderate";
-              return "danger";
-            }}
-          />
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
           {/* 위험 점수 카드 */}

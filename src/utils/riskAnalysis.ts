@@ -87,6 +87,70 @@ export const analyzeRisk = (data: ContractData): RiskAnalysis => {
   };
 };
 
+// 위험 점수를 기반으로 설명 생성
+export const generateExplanation = (
+  score: number,
+  factors: RiskFactor[]
+): string => {
+  let baseExplanation = "";
+
+  if (score <= 20) {
+    baseExplanation = `AI 위험 분석 결과, 현재 계약의 위험 점수는 ${score}점(100점 만점)으로 매우 낮은 위험도를 보입니다. `;
+    baseExplanation +=
+      "이는 안전한 계약 조건을 의미하며, 임차인이 계약 이행 중 큰 어려움을 겪을 가능성이 낮습니다. ";
+  } else if (score <= 40) {
+    baseExplanation = `AI 위험 분석 결과, 현재 계약의 위험 점수는 ${score}점(100점 만점)으로 낮은 위험도를 보입니다. `;
+    baseExplanation +=
+      "전반적으로 안전한 계약이지만, 일부 주의가 필요한 요소가 있습니다. ";
+  } else if (score <= 60) {
+    baseExplanation = `AI 위험 분석 결과, 현재 계약의 위험 점수는 ${score}점(100점 만점)으로 보통 수준의 위험도를 보입니다. `;
+    baseExplanation +=
+      "일반적인 수준의 위험이 존재하며, 적절한 관리가 필요합니다. ";
+  } else if (score <= 80) {
+    baseExplanation = `AI 위험 분석 결과, 현재 계약의 위험 점수는 ${score}점(100점 만점)으로 높은 위험도를 보입니다. `;
+    baseExplanation +=
+      "주의가 필요한 계약 조건들이 다수 존재하며, 위험 관리 방안을 검토해야 합니다. ";
+  } else {
+    baseExplanation = `AI 위험 분석 결과, 현재 계약의 위험 점수는 ${score}점(100점 만점)으로 매우 높은 위험도를 보입니다. `;
+    baseExplanation +=
+      "상당한 위험이 내포되어 있으며, 신중한 검토와 추가적인 보호 장치가 필요합니다. ";
+  }
+
+  // 주요 위험 요인 설명 추가
+  if (factors.length > 0) {
+    const topFactors = factors.sort((a, b) => b.impact - a.impact).slice(0, 3);
+
+    baseExplanation += `주요 위험 요인으로는 `;
+    topFactors.forEach((factor, index) => {
+      if (index === 0) {
+        baseExplanation += `${factor.name}이(가) ${factor.impact}%의 영향도를`;
+      } else if (index === topFactors.length - 1) {
+        baseExplanation += `, ${factor.name}이(가) ${factor.impact}%의 영향도를`;
+      } else {
+        baseExplanation += `, ${factor.name}이(가) ${factor.impact}%의 영향도를`;
+      }
+    });
+    baseExplanation += " 나타냅니다. ";
+  }
+
+  // 위험도에 따른 구체적인 권장사항 추가
+  if (score <= 40) {
+    baseExplanation +=
+      "현재 수준의 위험 관리로 충분하며, 정기적인 모니터링만 유지하면 됩니다.";
+  } else if (score <= 60) {
+    baseExplanation +=
+      "기본적인 위험 관리 방안을 적용하고, 주요 위험 요인에 대한 지속적인 모니터링이 필요합니다.";
+  } else if (score <= 80) {
+    baseExplanation +=
+      "적극적인 위험 관리가 필요하며, 임차권 등기, 보증보험 가입, 정기적인 재정 상태 점검 등을 고려해야 합니다.";
+  } else {
+    baseExplanation +=
+      "전문가 상담을 통한 종합적인 위험 평가가 필요하며, 추가 담보 제공이나 계약 조건 재검토를 강력히 권장합니다.";
+  }
+
+  return baseExplanation;
+};
+
 // 리포트 다운로드 함수
 export const downloadReport = (
   riskResult: RiskAnalysis,

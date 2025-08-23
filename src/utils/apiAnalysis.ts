@@ -9,12 +9,12 @@ export interface APIResponse {
   modelVersion: string;
 }
 
-// 위험도 등급 계산
+// 위험도 등급 계산 (0-100 스케일 기준)
 export const getRiskGrade = (
   riskScore: number
 ): "safe" | "moderate" | "danger" => {
-  if (riskScore <= 3) return "safe";
-  if (riskScore <= 6) return "moderate";
+  if (riskScore <= 20) return "safe";
+  if (riskScore <= 60) return "moderate";
   return "danger";
 };
 
@@ -43,7 +43,7 @@ export const generateRiskFactors = (
   }
 
   // 위험 점수 기반 요인
-  if (apiData.riskScore > 7) {
+  if (apiData.riskScore > 60) {
     factors.push({
       name: "전체 위험도",
       impact: 30,
@@ -86,9 +86,9 @@ export const generateExplanation = (
   explanation += `LTV 비율은 ${apiData.midLtv.toFixed(2)}이며, 권장 보험료는 ${apiData.finalPrice.toLocaleString()}원입니다. `;
 
   if (apiData.midLtv > 3) {
-    explanation += "LTV가 높아 추가적인 위험 관리가 필요합니다.";
+    explanation += "LTV가 높아 추가적인 관리가 필요합니다.";
   } else {
-    explanation += "현재 수준의 위험 관리로 충분합니다.";
+    explanation += "현재 수준의 관리로 충분합니다.";
   }
 
   return explanation;
@@ -116,7 +116,7 @@ export const generateCustomRecommendations = (
   }
 
   // 위험 점수 기반 권장사항
-  if (apiData.riskScore > 7) {
+  if (apiData.riskScore > 60) {
     recommendations.push({
       title: "위험 관리 강화",
       description: `위험 점수 ${apiData.riskScore.toFixed(1)}로 높은 수준입니다.`,
@@ -166,7 +166,7 @@ export const createApiBasedAnalysis = (
   contractData: ContractData
 ): RiskAnalysis => {
   return {
-    score: Math.round(apiData.riskScore * 10), // 0-100 스케일로 변환
+    score: apiData.riskScore, // 반올림 없이 원래 점수 그대로 사용
     grade: getRiskGrade(apiData.riskScore),
     factors: generateRiskFactors(apiData, contractData),
     explanation: generateExplanation(apiData, contractData),

@@ -34,15 +34,15 @@ const generateCustomRecommendations = (data: ContractData) => {
   // 전세보증금 관련 권고
   if (data.jeonseDepositAmount && data.jeonseDepositAmount > 10000) {
     recommendations.push({
-      title: "전세보증금 분할 납부 협의",
-      description:
-        "높은 전세보증금으로 인한 위험을 줄이기 위해 임대인과 협의하세요",
+      title: "전세보증금 위험 관리 강화",
+      description: `현재 전세보증금 ${data.jeonseDepositAmount.toLocaleString()}만원으로 높은 수준입니다. 임대인 파산 시 보증금 회수 위험이 있어 적극적인 관리가 필요합니다.`,
       priority: "high",
       actions: [
-        "임대인과 전세보증금 분할 납부 협의",
-        "전세보증금을 낮추고 월세로 조정",
-        "대출금 상환 계획 수립",
-        "보증 한도 조정 검토",
+        "전세보증금 분할 납부 협의 (월세 전환 검토)",
+        "전세보증보험 가입으로 위험 분산",
+        "임대인 재정상태 사전 점검",
+        "등기부등본 열람으로 담보권 현황 확인",
+        "전문가 상담을 통한 계약 조건 개선",
       ],
       icon: <DollarSign className="w-6 h-6 text-red-500" />,
     });
@@ -51,14 +51,15 @@ const generateCustomRecommendations = (data: ContractData) => {
   // 재산가치 관련 권고
   if (data.propertyValue && data.propertyValue > 50000) {
     recommendations.push({
-      title: "재산가치 관리",
-      description: "높은 재산가치로 인한 위험을 관리하세요",
+      title: "고가 부동산 특화 위험 관리",
+      description: `부동산 가치 ${data.propertyValue.toLocaleString()}만원으로 높은 수준입니다. 시세 변동에 따른 위험과 보험 한도 초과 가능성이 있어 체계적인 관리가 필요합니다.`,
       priority: "high",
       actions: [
-        "재산가치 평가 재검토",
-        "보험 범위 조정",
-        "위험 분산 방안 검토",
-        "전문가 상담",
+        "정기적인 부동산 가치 재평가 (연 1-2회)",
+        "보험 한도 및 범위 최적화 검토",
+        "지역 부동산 시장 동향 모니터링",
+        "투자 분산을 위한 포트폴리오 검토",
+        "부동산 전문가 상담 및 컨설팅",
       ],
       icon: <TrendingUp className="w-6 h-6 text-orange-500" />,
     });
@@ -67,15 +68,16 @@ const generateCustomRecommendations = (data: ContractData) => {
   // 선순위 채권 관련 권고
   if (data.seniorLienAmount) {
     recommendations.push({
-      title: "등기부등본 확인 및 보증금 회수 가능성 점검",
-      description:
-        "선순위 채권이 있는 경우 담보권 설정 현황을 반드시 확인하세요",
+      title: "선순위 채권 위험 대응 방안",
+      description: `선순위 채권 ${data.seniorLienAmount.toLocaleString()}만원이 존재합니다. 임대인 파산 시 보증금 회수 순위가 낮아 상당한 위험이 내포되어 있습니다.`,
       priority: "high",
       actions: [
-        "등기부등본 열람 및 분석",
-        "담보권자 정보 확인",
-        "보증금 회수 가능성 점검",
-        "법률 상담을 통한 권리 보호 방안 검토",
+        "등기부등본 상세 분석 및 담보권자 정보 파악",
+        "담보권 설정 현황 및 우선순위 확인",
+        "보증금 회수 가능성 및 위험도 평가",
+        "법률 전문가 상담을 통한 권리 보호 방안 수립",
+        "대체 거주지 및 계약 조건 재검토",
+        "전세보증보험 가입으로 위험 완화",
       ],
       icon: <Shield className="w-6 h-6 text-purple-500" />,
     });
@@ -84,14 +86,17 @@ const generateCustomRecommendations = (data: ContractData) => {
   // 보험 기간 관련 권고
   if (!data.coverageStartYyyymm || !data.coverageEndYyyymm) {
     recommendations.push({
-      title: "보험 기간 설정",
-      description: "보험 기간을 설정하여 위험을 관리하세요",
+      title: "보험 기간 설정 및 관리 체계화",
+      description:
+        "보험 기간이 명확히 설정되지 않아 보험 효력 및 보장 범위에 불확실성이 있습니다. 체계적인 보험 관리가 필요합니다.",
       priority: "medium",
       actions: [
-        "보험 시작일 설정",
-        "보험 종료일 설정",
-        "보험 범위 검토",
-        "보험료 조정",
+        "보험 시작일 및 종료일 명확히 설정",
+        "보험 범위 및 보장 한도 상세 검토",
+        "보험료 납부 방법 및 주기 설정",
+        "보험 갱신 조건 및 자동 갱신 여부 확인",
+        "보험사별 견적 비교 및 최적 조건 선택",
+        "정기적인 보험 상품 점검 및 업그레이드",
       ],
       icon: <CheckCircle className="w-6 h-6 text-blue-500" />,
     });
@@ -103,14 +108,17 @@ const generateCustomRecommendations = (data: ContractData) => {
     (data.address.includes("서울") || data.address.includes("경기"))
   ) {
     recommendations.push({
-      title: "수도권 특화 위험 관리",
-      description: "수도권 지역의 높은 부동산 가격 변동성에 대비하세요",
+      title: "수도권 부동산 특화 위험 관리",
+      description:
+        "수도권 지역의 높은 부동산 가격 변동성과 정책 변화에 따른 위험을 체계적으로 관리해야 합니다.",
       priority: "medium",
       actions: [
-        "정기적인 시세 모니터링",
-        "임대차 계약 갱신 조건 사전 협의",
-        "보증금 인상 제한 조항 검토",
-        "지역 부동산 정책 변화 주시",
+        "월 1회 지역 시세 및 거래 동향 모니터링",
+        "임대차 계약 갱신 조건 사전 협의 및 문서화",
+        "보증금 인상 제한 조항 및 상한선 설정",
+        "지역 부동산 정책 변화 및 규제 동향 주시",
+        "수도권 특화 보험 상품 검토 및 가입",
+        "정기적인 임대차 시장 동향 리포트 구독",
       ],
       icon: <MapPin className="w-6 h-6 text-green-500" />,
     });
@@ -119,15 +127,17 @@ const generateCustomRecommendations = (data: ContractData) => {
   // 주택 유형별 추가 권고
   if (data.housingType === "apartment" || data.housingType === "officetel") {
     recommendations.push({
-      title: "공동주택 특화 관리",
+      title: "공동주택 특화 관리 및 비용 관리",
       description:
-        "공동주택의 관리비, 공용시설 사용료 등 추가 비용을 고려하세요",
+        "공동주택의 관리비, 공용시설 사용료, 입주자 대표회의 참여 등 공동 관리 요소를 체계적으로 관리해야 합니다.",
       priority: "low",
       actions: [
-        "관리비 및 공용시설 사용료 확인",
-        "입주자 대표회의 참여",
-        "공용시설 사용 규정 숙지",
-        "관리사무소와의 원활한 소통",
+        "월별 관리비 및 공용시설 사용료 상세 내역 확인",
+        "입주자 대표회의 정기 참여 및 의사결정 과정 모니터링",
+        "공용시설 사용 규정 숙지 및 준수",
+        "관리사무소와의 원활한 소통 채널 구축",
+        "공동주택 특화 보험 상품 검토",
+        "정기적인 공동시설 점검 및 유지보수 현황 파악",
       ],
       icon: <Home className="w-6 h-6 text-indigo-500" />,
     });
@@ -221,7 +231,7 @@ export default function CustomRecommendations({
 
               <div className="space-y-2">
                 <h4 className="font-semibold text-gray-800 text-sm mb-2">
-                  구체적인 행동 단계
+                  체크 리스트
                 </h4>
                 {recommendation.actions.map((action, actionIndex) => (
                   <div
