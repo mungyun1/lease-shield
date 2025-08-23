@@ -1,5 +1,6 @@
 import { DollarSign } from "lucide-react";
 import { ContractData } from "@/types";
+import { convertMonthToYyyymm, convertYyyymmToMonth } from "@/utils";
 
 interface FinancialInfoStepProps {
   contractData: ContractData;
@@ -103,11 +104,11 @@ export default function FinancialInfoStep({
           </label>
           <input
             type="month"
-            value={contractData.coverageStartYyyymm}
+            value={convertYyyymmToMonth(contractData.coverageStartYyyymm)}
             onChange={(e) =>
               setContractData({
                 ...contractData,
-                coverageStartYyyymm: e.target.value,
+                coverageStartYyyymm: convertMonthToYyyymm(e.target.value),
               })
             }
             className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
@@ -122,11 +123,11 @@ export default function FinancialInfoStep({
           </label>
           <input
             type="month"
-            value={contractData.coverageEndYyyymm}
+            value={convertYyyymmToMonth(contractData.coverageEndYyyymm)}
             onChange={(e) =>
               setContractData({
                 ...contractData,
-                coverageEndYyyymm: e.target.value,
+                coverageEndYyyymm: convertMonthToYyyymm(e.target.value),
               })
             }
             className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"

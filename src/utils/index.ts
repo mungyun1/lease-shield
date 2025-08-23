@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 export * from "./riskAnalysis";
 export * from "./simulation";
 export * from "./addressUtils";
+export * from "./dateUtils";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
