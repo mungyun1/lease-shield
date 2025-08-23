@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MapPin, DollarSign } from "lucide-react";
 import { ContractData } from "@/types";
 import { PageHeader, StepForm, StepIndicator } from "@/components/input";
+import { calculateRiskScore } from "@/lib/api";
 
 const steps = [
   {
@@ -53,6 +54,32 @@ export default function InputPage() {
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
+
+      // API 요청용 데이터 필터링
+      const apiRequestData = {
+        region: contractData.region,
+        housingType: contractData.housingType,
+        seniorLienAmount: contractData.seniorLienAmount,
+        jeonseDepositAmount: contractData.jeonseDepositAmount,
+        propertyValue: contractData.propertyValue,
+        coverageStartYyyymm: contractData.coverageStartYyyymm,
+        coverageEndYyyymm: contractData.coverageEndYyyymm,
+      };
+
+      // 필터링된 데이터를 콘솔에 출력
+      console.log("API 요청용 데이터:", apiRequestData);
+
+      // API 요청 보내기
+      try {
+        const apiResponse = await calculateRiskScore(apiRequestData);
+        console.log("API 응답:", apiResponse);
+
+        // API 응답을 로컬 스토리지에 저장
+        localStorage.setItem("apiResponse", JSON.stringify(apiResponse));
+      } catch (apiError) {
+        console.error("API 요청 실패:", apiError);
+        // API 실패 시에도 계속 진행 (사용자 경험 향상)
+      }
 
       // 계약 데이터를 로컬 스토리지에 저장 (결과 페이지에서 사용)
       localStorage.setItem("contractData", JSON.stringify(contractData));

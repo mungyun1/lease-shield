@@ -384,3 +384,39 @@ export const checkApiHealth = async (): Promise<boolean> => {
     return false;
   }
 };
+
+/**
+ * 위험 점수 계산을 위한 API 요청
+ */
+export async function calculateRiskScore(data: {
+  region: string;
+  housingType: string;
+  seniorLienAmount: number | null;
+  jeonseDepositAmount: number | null;
+  propertyValue: number | null;
+  coverageStartYyyymm: string;
+  coverageEndYyyymm: string;
+}) {
+  try {
+    const response = await fetch("http://10.10.1.34:8000/v1/score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": "my-secret-key",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `API 요청 실패: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("위험 점수 계산 API 요청 중 오류:", error);
+    throw error;
+  }
+}
