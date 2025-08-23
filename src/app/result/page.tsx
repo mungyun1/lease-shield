@@ -17,6 +17,7 @@ import {
   ActionButtons,
   ResultHeader,
   LoadingSpinner,
+  GlobalImportanceChart,
 } from "@/components/result";
 import {
   APIResponse,
@@ -61,6 +62,7 @@ export default function ResultPage() {
     const savedContractData = localStorage.getItem("contractData");
     const savedApiResponse = localStorage.getItem("apiResponse");
 
+    console.log("savedApiResponse", savedApiResponse);
     if (savedContractData) {
       try {
         const parsedData = JSON.parse(savedContractData);
@@ -70,22 +72,26 @@ export default function ResultPage() {
         if (savedApiResponse) {
           try {
             const parsedApiResponse = JSON.parse(savedApiResponse);
+
             setApiResponse(parsedApiResponse);
 
             // API 응답을 기반으로 위험도 분석 데이터 생성
             const apiBasedAnalysis = createApiBasedAnalysis(parsedApiResponse);
             setRiskResult(apiBasedAnalysis);
-          } catch {
+          } catch (error) {
+            console.error("API 응답 파싱 실패:", error);
             // API 응답 파싱 실패 시 기본 분석 수행
             const analysis = analyzeRisk(parsedData);
             setRiskResult(analysis);
           }
         } else {
+          console.log("저장된 API 응답이 없음");
           // API 응답이 없으면 기본 분석 수행
           const analysis = analyzeRisk(parsedData);
           setRiskResult(analysis);
         }
-      } catch {
+      } catch (error) {
+        console.error("계약 데이터 파싱 실패:", error);
         // 기본 데이터로 폴백
         const mockDataWithExplanation: RiskAnalysis = {
           ...mockData,
@@ -114,6 +120,17 @@ export default function ResultPage() {
       return () => clearInterval(timer);
     }
   }, [riskResult]);
+
+  // apiResponse 상태 변화 추적
+  useEffect(() => {
+    console.log("apiResponse 상태 변화:", apiResponse);
+    if (apiResponse?.globalImportance) {
+      console.log(
+        "globalImportance 데이터 확인:",
+        apiResponse.globalImportance
+      );
+    }
+  }, [apiResponse]);
 
   const handleDownloadReport = async () => {
     if (riskResult && contractData) {
@@ -162,6 +179,18 @@ export default function ResultPage() {
           {/* 위험 요인 분석 */}
           <RiskFactorsAnalysis factors={riskResult.factors} />
         </div>
+
+        {/* 전역 중요도 분석 차트 */}
+        {apiResponse?.globalImportance && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-12"
+          >
+            <GlobalImportanceChart data={apiResponse.globalImportance} />
+          </motion.div>
+        )}
 
         {/* AI 설명 */}
         <motion.div

@@ -398,8 +398,12 @@ export async function calculateRiskScore(data: {
   coverageEndYyyymm: string;
 }) {
   try {
+    console.log(
+      "process.env.NEXT_PUBLIC_API_KE",
+      process.env.NEXT_PUBLIC_API_KEY
+    );
     const apiUrl =
-      process.env.NEXT_PUBLIC_API_URL || "http://10.10.1.34:8000/v1/score";
+      process.env.NEXT_PUBLIC_API_URL || "http://10.10.1.34:8000/score";
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {

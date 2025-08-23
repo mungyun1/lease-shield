@@ -75,13 +75,9 @@ export default function InputPage() {
       try {
         const apiResponse = await calculateRiskScore(apiRequestData);
 
-        // API 응답을 로컬 스토리지에 저장
         localStorage.setItem("apiResponse", JSON.stringify(apiResponse));
-      } catch {
-        // API 실패 시에도 계속 진행 (사용자 경험 향상)
-      }
+      } catch {}
 
-      // 계약 데이터를 로컬 스토리지에 저장 (결과 페이지에서 사용)
       localStorage.setItem("contractData", JSON.stringify(contractData));
 
       // 위험 진단 시작 시간 기록
