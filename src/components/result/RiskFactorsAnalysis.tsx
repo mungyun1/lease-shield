@@ -24,7 +24,7 @@ export default function RiskFactorsAnalysis({
       transition={{ delay: 0.5 }}
       className="lg:col-span-2"
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 h-full">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg border border-white/20 p-8 h-full">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
           <Shield className="w-7 h-7 mr-3 text-blue-600" />
           위험 요인별 영향도 분석

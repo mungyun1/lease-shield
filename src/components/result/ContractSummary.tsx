@@ -23,16 +23,14 @@ const getKoreanRegion = (region: string): string => {
     gwangju: "광주",
     daejeon: "대전",
     ulsan: "울산",
-    sejong: "세종",
-    gyeonggi: "경기도",
-    gangwon: "강원도",
-    chungbuk: "충청북도",
-    chungnam: "충청남도",
-    jeonbuk: "전라북도",
-    jeonnam: "전라남도",
-    gyeongbuk: "경상북도",
-    gyeongnam: "경상남도",
-    jeju: "제주도",
+    gyeonggi: "경기",
+    gangwon: "강원",
+    chungbuk: "충북",
+    chungnam: "충남",
+    jeonbuk: "전북",
+    jeonnam: "전남",
+    gyeongbuk: "경북",
+    gyeongnam: "경남",
   };
   return regionMap[region.toLowerCase()] || region;
 };
@@ -40,16 +38,12 @@ const getKoreanRegion = (region: string): string => {
 // 주택 유형을 한국어로 변환하는 함수
 const getKoreanHousingType = (housingType: string): string => {
   const housingTypeMap: { [key: string]: string } = {
-    apartment: "아파트",
+    multifamily: "다가구 주택",
+    multigeneration: "다세대 주택",
     house: "단독주택",
-    villa: "빌라",
+    apartment: "아파트",
     officetel: "오피스텔",
-    studio: "원룸",
-    duplex: "듀플렉스",
-    penthouse: "펜트하우스",
-    townhouse: "타운하우스",
-    condo: "콘도",
-    loft: "로프트",
+    commercial: "주상복합",
   };
   return housingTypeMap[housingType.toLowerCase()] || housingType;
 };
@@ -64,7 +58,7 @@ export default function ContractSummary({
       transition={{ delay: 0.3 }}
       className="w-full"
     >
-      <div className="bg-gradient-to-r from-white/90 to-blue-50/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 p-8">
+      <div className="bg-gradient-to-r from-white/90 to-blue-50/90 backdrop-blur-sm rounded-3xl shadow-lg border border-white/30 p-8">
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-gray-700 mb-2">
             계약 정보 요약

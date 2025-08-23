@@ -6,7 +6,7 @@ export const analyzeRisk = (data: ContractData): RiskAnalysis => {
   const factors: RiskFactor[] = [];
 
   // 보증금 분석
-  if (data.deposit > 10000) {
+  if (data.deposit && data.deposit > 10000) {
     score += 20;
     factors.push({
       name: "보증금",
@@ -14,7 +14,7 @@ export const analyzeRisk = (data: ContractData): RiskAnalysis => {
       description: "높은 보증금으로 인한 위험",
       category: "financial",
     });
-  } else if (data.deposit > 5000) {
+  } else if (data.deposit && data.deposit > 5000) {
     score += 10;
     factors.push({
       name: "보증금",
@@ -25,7 +25,7 @@ export const analyzeRisk = (data: ContractData): RiskAnalysis => {
   }
 
   // 대출금 분석
-  if (data.loanAmount > data.deposit * 0.7) {
+  if (data.loanAmount && data.deposit && data.loanAmount > data.deposit * 0.7) {
     score += 15;
     factors.push({
       name: "대출금",

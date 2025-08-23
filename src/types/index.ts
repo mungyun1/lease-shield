@@ -2,8 +2,8 @@
 export interface ContractData {
   region: string;
   housingType: string;
-  deposit: number;
-  loanAmount: number;
+  deposit: number | null;
+  loanAmount: number | null;
   hasPriorityDebt: boolean;
   hasTenancyRegistration: boolean;
 }

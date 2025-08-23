@@ -139,7 +139,7 @@ export default function CustomRecommendations({
       transition={{ delay: 0.8 }}
       className="mb-12"
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg border border-white/20 p-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
           <AlertTriangle className="w-7 h-7 mr-3 text-orange-600" />
           맞춤형 예방 조치 제안

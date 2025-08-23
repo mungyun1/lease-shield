@@ -7,14 +7,14 @@ export const calculateRiskScore = (
   let score = 50; // 기본 점수
 
   // 보증금 영향 (높을수록 위험)
-  if (data.deposit > 10000) score += 25;
-  else if (data.deposit > 5000) score += 15;
-  else if (data.deposit > 3000) score += 5;
+  if (data.deposit && data.deposit > 10000) score += 25;
+  else if (data.deposit && data.deposit > 5000) score += 15;
+  else if (data.deposit && data.deposit > 3000) score += 5;
 
   // 대출금 영향 (높을수록 위험)
-  if (data.loanAmount > 5000) score += 20;
-  else if (data.loanAmount > 3000) score += 10;
-  else if (data.loanAmount > 1000) score += 5;
+  if (data.loanAmount && data.loanAmount > 5000) score += 20;
+  else if (data.loanAmount && data.loanAmount > 3000) score += 10;
+  else if (data.loanAmount && data.loanAmount > 1000) score += 5;
 
   // 선순위 채권 영향
   if (data.hasPriorityDebt) score += 20;
@@ -44,6 +44,7 @@ export const getVariableImpact = (
   const originalValue = originalData[field];
 
   if (field === "deposit") {
+    if (currentValue === null || originalValue === null) return null;
     const diff = (currentValue as number) - (originalValue as number);
     if (diff > 0) {
       return {
@@ -62,6 +63,7 @@ export const getVariableImpact = (
   }
 
   if (field === "loanAmount") {
+    if (currentValue === null || originalValue === null) return null;
     const diff = (currentValue as number) - (originalValue as number);
     if (diff > 0) {
       return {
@@ -133,13 +135,13 @@ export const generateChartData = (
 ) => [
   {
     name: "보증금",
-    current: currentData.deposit,
-    original: originalData.deposit,
+    current: currentData.deposit || 0,
+    original: originalData.deposit || 0,
   },
   {
     name: "대출금",
-    current: currentData.loanAmount,
-    original: originalData.loanAmount,
+    current: currentData.loanAmount || 0,
+    original: originalData.loanAmount || 0,
   },
 ];
 
@@ -147,8 +149,8 @@ export const generateChartData = (
 export const getInitialSimulationData = (): SimulationData => ({
   region: "seoul",
   housingType: "apartment",
-  deposit: 5000,
-  loanAmount: 3000,
+  deposit: null,
+  loanAmount: null,
   hasPriorityDebt: false,
   hasTenancyRegistration: false,
   score: 75,

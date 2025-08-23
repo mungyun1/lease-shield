@@ -16,7 +16,7 @@ export default function PageHeader() {
         전세 계약 위험 진단
       </h1>
       <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-        안전한 전세 계약을 위한 스마트한 위험 진단 서비스입니다
+        안전한 전세 계약을 위한 AI 위험 진단 서비스입니다
       </p>
     </motion.div>
   );

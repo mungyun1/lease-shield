@@ -18,7 +18,7 @@ export const useSimulation = () => {
   const handleInputChange = useCallback(
     (
       field: keyof Omit<SimulationData, "score" | "grade">,
-      value: number | boolean
+      value: number | boolean | null
     ) => {
       const newData = { ...currentData, [field]: value };
       const { score, grade } = calculateRiskScore(newData);

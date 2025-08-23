@@ -18,7 +18,7 @@ export default function BasicInfoStep({
         </h2>
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-sm opacity-20"></div>
-          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-pulse"></div>
@@ -56,16 +56,21 @@ export default function BasicInfoStep({
             className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
           >
             <option value="">지역을 선택하세요</option>
-            <option value="seoul">서울</option>
+            <option value="gangwon">강원</option>
             <option value="gyeonggi">경기</option>
-            <option value="incheon">인천</option>
-            <option value="busan">부산</option>
+            <option value="gyeongnam">경남</option>
+            <option value="gyeongbuk">경북</option>
+            <option value="gwangju">광주</option>
             <option value="daegu">대구</option>
             <option value="daejeon">대전</option>
-            <option value="gwangju">광주</option>
+            <option value="busan">부산</option>
+            <option value="seoul">서울</option>
             <option value="ulsan">울산</option>
-            <option value="sejong">세종</option>
-            <option value="jeju">제주</option>
+            <option value="incheon">인천</option>
+            <option value="jeonnam">전남</option>
+            <option value="jeonbuk">전북</option>
+            <option value="chungnam">충남</option>
+            <option value="chungbuk">충북</option>
           </select>
         </div>
 
@@ -85,11 +90,12 @@ export default function BasicInfoStep({
             className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
           >
             <option value="">주택 유형을 선택하세요</option>
-            <option value="apartment">아파트</option>
-            <option value="villa">빌라</option>
+            <option value="multifamily">다가구 주택</option>
+            <option value="multigeneration">다세대 주택</option>
             <option value="house">단독주택</option>
+            <option value="apartment">아파트</option>
             <option value="officetel">오피스텔</option>
-            <option value="studio">원룸/투룸</option>
+            <option value="commercial">주상복합</option>
           </select>
         </div>
       </div>

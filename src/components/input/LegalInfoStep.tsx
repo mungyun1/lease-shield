@@ -17,7 +17,7 @@ export default function LegalInfoStep({
         </h2>
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 rounded-2xl blur-sm opacity-20"></div>
-          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full animate-pulse"></div>

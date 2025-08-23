@@ -16,7 +16,7 @@ export default function FinancialInfoStep({
         <h2 className="text-2xl font-bold text-gray-800 mb-4">금융 정보</h2>
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-500 rounded-2xl blur-sm opacity-20"></div>
-          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="relative bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full animate-pulse"></div>
@@ -46,15 +46,15 @@ export default function FinancialInfoStep({
           <div className="relative">
             <input
               type="number"
-              value={contractData.deposit}
+              value={contractData.deposit || ""}
               onChange={(e) =>
                 setContractData({
                   ...contractData,
-                  deposit: parseInt(e.target.value) || 0,
+                  deposit: e.target.value ? parseInt(e.target.value) : null,
                 })
               }
-              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
-              placeholder="예: 5000"
+              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              placeholder="ex) 5000"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">
               ₩
@@ -73,15 +73,15 @@ export default function FinancialInfoStep({
           <div className="relative">
             <input
               type="number"
-              value={contractData.loanAmount}
+              value={contractData.loanAmount || ""}
               onChange={(e) =>
                 setContractData({
                   ...contractData,
-                  loanAmount: parseInt(e.target.value) || 0,
+                  loanAmount: e.target.value ? parseInt(e.target.value) : null,
                 })
               }
-              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
-              placeholder="예: 3000"
+              className="w-full px-4 py-3 pl-12 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              placeholder="ex) 3000"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">
               ₩

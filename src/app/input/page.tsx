@@ -34,8 +34,8 @@ export default function InputPage() {
   const [contractData, setContractData] = useState<ContractData>({
     region: "",
     housingType: "",
-    deposit: 0,
-    loanAmount: 0,
+    deposit: null,
+    loanAmount: null,
     hasPriorityDebt: false,
     hasTenancyRegistration: false,
   });
@@ -56,9 +56,6 @@ export default function InputPage() {
     try {
       setIsSubmitting(true);
 
-      // 로딩 상태를 위한 지연 (사용자 경험 향상)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       // 계약 데이터를 로컬 스토리지에 저장 (결과 페이지에서 사용)
       localStorage.setItem("contractData", JSON.stringify(contractData));
 
@@ -71,6 +68,8 @@ export default function InputPage() {
       console.error("위험 진단 시작 중 오류 발생:", error);
       // 에러 처리 로직 추가 가능
     } finally {
+      // 로딩 상태를 위한 지연 (사용자 경험 향상)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSubmitting(false);
     }
   };
@@ -80,7 +79,12 @@ export default function InputPage() {
       case 1:
         return Boolean(contractData.region && contractData.housingType);
       case 2:
-        return Boolean(contractData.deposit > 0 && contractData.loanAmount > 0);
+        return Boolean(
+          contractData.deposit &&
+            contractData.deposit > 0 &&
+            contractData.loanAmount &&
+            contractData.loanAmount > 0
+        );
       case 3:
         return true; // 체크박스는 선택사항
       default:
