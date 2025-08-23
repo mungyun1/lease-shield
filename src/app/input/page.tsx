@@ -57,10 +57,11 @@ export default function InputPage() {
 
       const apiRequestData = {
         region: contractData.region,
+        address: contractData.detailAddress
+          ? `${contractData.address} ${contractData.detailAddress}`.trim()
+          : contractData.address,
         housingType: contractData.housingType,
-        seniorLienAmount: contractData.seniorLienAmount
-          ? contractData.seniorLienAmount * 10000
-          : 0,
+        seniorLienAmount: (contractData.seniorLienAmount ?? 0) * 10000,
         jeonseDepositAmount: contractData.jeonseDepositAmount
           ? contractData.jeonseDepositAmount * 10000
           : 0,
@@ -97,7 +98,6 @@ export default function InputPage() {
         const step1Valid = Boolean(
           contractData.zipCode &&
             contractData.address &&
-            contractData.detailAddress &&
             contractData.housingType
         );
 
