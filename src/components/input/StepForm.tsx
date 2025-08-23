@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ContractData } from "@/types";
 import BasicInfoStep from "./BasicInfoStep";
 import FinancialInfoStep from "./FinancialInfoStep";
-import LegalInfoStep from "./LegalInfoStep";
 import NavigationButtons from "./NavigationButtons";
 import AIAnalysisUI from "./AIAnalysisUI";
 
@@ -65,13 +64,6 @@ export default function StepForm({
 
                   {currentStep === 2 && (
                     <FinancialInfoStep
-                      contractData={contractData}
-                      setContractData={setContractData}
-                    />
-                  )}
-
-                  {currentStep === 3 && (
-                    <LegalInfoStep
                       contractData={contractData}
                       setContractData={setContractData}
                     />

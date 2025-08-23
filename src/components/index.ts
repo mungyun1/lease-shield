@@ -9,8 +9,6 @@ export {
   StepIndicator,
   BasicInfoStep,
   FinancialInfoStep,
-  LegalInfoStep,
-  InputNavigationButtons,
   PageHeader,
   StepForm,
   AIAnalysisUI,
