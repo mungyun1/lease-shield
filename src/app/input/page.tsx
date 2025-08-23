@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, DollarSign, FileText } from "lucide-react";
+import { MapPin, DollarSign } from "lucide-react";
 import { ContractData } from "@/types";
 import { PageHeader, StepForm, StepIndicator } from "@/components/input";
 

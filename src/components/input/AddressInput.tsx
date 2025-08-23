@@ -15,9 +15,29 @@ interface AddressInputProps {
 declare global {
   interface Window {
     daum: {
-      Postcode: new (options: any) => any;
+      Postcode: new (options: DaumPostcodeOptions) => DaumPostcodeInstance;
     };
   }
+}
+
+interface DaumPostcodeOptions {
+  oncomplete: (data: DaumPostcodeData) => void;
+  theme?: {
+    searchBgColor?: string;
+    queryTextColor?: string;
+  };
+}
+
+interface DaumPostcodeInstance {
+  open: () => void;
+}
+
+interface DaumPostcodeData {
+  zonecode: string;
+  address: string;
+  bname: string;
+  buildingName: string;
+  apartment: string;
 }
 
 export default function AddressInput({
@@ -49,7 +69,7 @@ export default function AddressInput({
     }
 
     new window.daum.Postcode({
-      oncomplete: function (data: any) {
+      oncomplete: function (data: DaumPostcodeData) {
         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드
         let fullAddress = data.address; // 도로명 주소 변수
         let extraAddress = ""; // 참고항목 변수
@@ -96,7 +116,8 @@ export default function AddressInput({
           value={zipCode}
           placeholder="우편번호"
           readOnly
-          className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-100 text-gray-700 cursor-not-allowed"
+          onClick={handleAddressSearch}
+          className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-100 text-gray-700 cursor-pointer hover:bg-gray-200 transition-colors duration-200"
         />
         <button
           type="button"
