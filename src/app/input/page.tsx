@@ -73,18 +73,38 @@ export default function InputPage() {
   };
 
   const isStepValid = (): boolean => {
+    console.log("Current step:", currentStep);
+    console.log("Contract data:", contractData);
+
     switch (currentStep) {
       case 1:
-        return Boolean(contractData.address && contractData.housingType);
+        const step1Valid = Boolean(
+          contractData.zipCode &&
+            contractData.address &&
+            contractData.detailAddress &&
+            contractData.housingType
+        );
+        console.log("Step 1 valid:", step1Valid);
+        return step1Valid;
       case 2:
-        return Boolean(
+        const step2Valid = Boolean(
           contractData.jeonseDepositAmount &&
             contractData.jeonseDepositAmount > 0 &&
             contractData.propertyValue &&
             contractData.propertyValue > 0 &&
             contractData.coverageStartYyyymm &&
-            contractData.coverageEndYyyymm
+            contractData.coverageStartYyyymm !== "" &&
+            contractData.coverageEndYyyymm &&
+            contractData.coverageEndYyyymm !== ""
         );
+        console.log("Step 2 valid:", step2Valid);
+        console.log("Step 2 details:", {
+          jeonseDepositAmount: contractData.jeonseDepositAmount,
+          propertyValue: contractData.propertyValue,
+          coverageStartYyyymm: contractData.coverageStartYyyymm,
+          coverageEndYyyymm: contractData.coverageEndYyyymm,
+        });
+        return step2Valid;
       default:
         return false;
     }

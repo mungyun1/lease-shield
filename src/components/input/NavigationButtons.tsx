@@ -58,9 +58,9 @@ export default function NavigationButtons({
             whileHover={{ scale: 1.02, x: 2 }}
             whileTap={{ scale: 0.98 }}
             onClick={onSubmit}
-            disabled={isSubmitting}
+            disabled={!isStepValid || isSubmitting}
             className={`flex items-center justify-center w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer ${
-              isSubmitting
+              !isStepValid || isSubmitting
                 ? "bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed opacity-70"
                 : "bg-gradient-to-r from-emerald-500 to-green-600 text-white hover:shadow-xl hover:from-emerald-600 hover:to-green-700"
             }`}
