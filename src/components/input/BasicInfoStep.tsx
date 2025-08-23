@@ -1,6 +1,7 @@
 import { Home } from "lucide-react";
 import { ContractData } from "@/types";
 import AddressInput from "./AddressInput";
+import { extractRegionFromAddress } from "@/utils";
 
 interface BasicInfoStepProps {
   contractData: ContractData;
@@ -16,11 +17,15 @@ export default function BasicInfoStep({
     address: string,
     detailAddress: string
   ) => {
+    // 주소에서 지역 자동 추출
+    const region = extractRegionFromAddress(address);
+
     setContractData({
       ...contractData,
       zipCode,
       address,
       detailAddress,
+      region,
     });
   };
 
@@ -79,12 +84,12 @@ export default function BasicInfoStep({
             className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
           >
             <option value="">주택 유형을 선택하세요</option>
-            <option value="multifamily">다가구 주택</option>
-            <option value="multigeneration">다세대 주택</option>
-            <option value="house">단독주택</option>
-            <option value="apartment">아파트</option>
-            <option value="officetel">오피스텔</option>
-            <option value="commercial">주상복합</option>
+            <option value="다가구 주택">다가구 주택</option>
+            <option value="다세대 주택">다세대 주택</option>
+            <option value="단독주택">단독주택</option>
+            <option value="아파트">아파트</option>
+            <option value="오피스텔">오피스텔</option>
+            <option value="주상복합">주상복합</option>
           </select>
 
           <label className="block text-sm font-semibold text-gray-700 mb-3">

@@ -73,9 +73,6 @@ export default function InputPage() {
   };
 
   const isStepValid = (): boolean => {
-    console.log("Current step:", currentStep);
-    console.log("Contract data:", contractData);
-
     switch (currentStep) {
       case 1:
         const step1Valid = Boolean(
@@ -84,7 +81,7 @@ export default function InputPage() {
             contractData.detailAddress &&
             contractData.housingType
         );
-        console.log("Step 1 valid:", step1Valid);
+
         return step1Valid;
       case 2:
         const step2Valid = Boolean(
@@ -97,15 +94,10 @@ export default function InputPage() {
             contractData.coverageEndYyyymm &&
             contractData.coverageEndYyyymm !== ""
         );
-        console.log("Step 2 valid:", step2Valid);
-        console.log("Step 2 details:", {
-          jeonseDepositAmount: contractData.jeonseDepositAmount,
-          propertyValue: contractData.propertyValue,
-          coverageStartYyyymm: contractData.coverageStartYyyymm,
-          coverageEndYyyymm: contractData.coverageEndYyyymm,
-        });
+
         return step2Valid;
       default:
+        console.log(contractData);
         return false;
     }
   };
