@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { X, ExternalLink } from "lucide-react";
+import { X } from "lucide-react";
 import { PreventionGuide } from "@/types";
 
 interface GuideModalProps {

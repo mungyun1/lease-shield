@@ -24,12 +24,20 @@ export default function ComparisonChart({
   const chartData = generateChartData(currentData, originalData);
 
   // 커스텀 툴팁
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
+    active?: boolean;
+    payload?: Array<{ name: string; value: number; color: string }>;
+    label?: string;
+  }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
           <p className="text-gray-800 font-semibold mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index: number) => (
             <div key={index} className="flex items-center mb-1">
               <div
                 className="w-3 h-3 rounded-full mr-2"

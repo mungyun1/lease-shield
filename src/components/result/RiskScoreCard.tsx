@@ -22,7 +22,6 @@ const getGradeIcon = (grade: string) => {
 };
 
 export default function RiskScoreCard({
-  score,
   grade,
   animatedScore,
 }: RiskScoreCardProps) {

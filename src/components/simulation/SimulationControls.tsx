@@ -1,17 +1,9 @@
 import { motion } from "framer-motion";
-import {
-  RotateCcw,
-  Download,
-  Settings,
-  AlertTriangle,
-  CheckCircle,
-} from "lucide-react";
+import { RotateCcw, Download, Settings, AlertTriangle } from "lucide-react";
 import { SimulationData } from "@/types";
-import { getVariableImpact } from "@/utils/simulation";
 
 interface SimulationControlsProps {
   currentData: SimulationData;
-  originalData: SimulationData;
   onInputChange: (
     field: keyof Omit<SimulationData, "score" | "grade">,
     value: number | boolean
@@ -23,7 +15,6 @@ interface SimulationControlsProps {
 
 export default function SimulationControls({
   currentData,
-  originalData,
   onInputChange,
   onReset,
   onSave,

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, Brain, CheckCircle } from "lucide-react";
+import { FileText, Brain, CheckCircle } from "lucide-react";
 
 const steps = [
   {

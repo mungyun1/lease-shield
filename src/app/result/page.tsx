@@ -155,12 +155,7 @@ export default function ResultPage() {
         </motion.div>
 
         {/* 맞춤형 예방 조치 제안 */}
-        {contractData && (
-          <CustomRecommendations
-            contractData={contractData}
-            riskFactors={riskResult.factors}
-          />
-        )}
+        {contractData && <CustomRecommendations contractData={contractData} />}
 
         {/* 액션 버튼 */}
         <ActionButtons

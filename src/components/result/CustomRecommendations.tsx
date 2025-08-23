@@ -9,18 +9,14 @@ import {
   Home,
   Info,
 } from "lucide-react";
-import { ContractData, RiskFactor } from "@/types";
+import { ContractData } from "@/types";
 
 interface CustomRecommendationsProps {
   contractData: ContractData;
-  riskFactors: RiskFactor[];
 }
 
 // 맞춤형 예방 조치 제안을 생성하는 함수
-const generateCustomRecommendations = (
-  data: ContractData,
-  riskFactors: RiskFactor[]
-) => {
+const generateCustomRecommendations = (data: ContractData) => {
   const recommendations: Array<{
     title: string;
     description: string;
@@ -133,12 +129,8 @@ const generateCustomRecommendations = (
 
 export default function CustomRecommendations({
   contractData,
-  riskFactors,
 }: CustomRecommendationsProps) {
-  const recommendations = generateCustomRecommendations(
-    contractData,
-    riskFactors
-  );
+  const recommendations = generateCustomRecommendations(contractData);
 
   return (
     <motion.div

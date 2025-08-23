@@ -1,20 +1,58 @@
 // UI Components
-export * from "./ui";
+export { Button, buttonVariants, NavigationButtons } from "./ui";
 
 // Layout Components
-export * from "./layout";
+export {} from "./layout";
 
 // Input Components
-export * from "./input";
+export {
+  StepIndicator,
+  BasicInfoStep,
+  FinancialInfoStep,
+  LegalInfoStep,
+  InputNavigationButtons,
+  PageHeader,
+  StepForm,
+  AIAnalysisUI,
+} from "./input";
 
 // Result Components
-export * from "./result";
+export {
+  ContractSummary,
+  RiskScoreCard,
+  RiskFactorsAnalysis,
+  CustomRecommendations,
+  ActionButtons,
+  ResultHeader,
+  LoadingSpinner,
+} from "./result";
 
 // Simulation Components
-export * from "./simulation";
+export {
+  SimulationHeader,
+  SimulationControls,
+  ComparisonCards,
+  ChangeAnalysis,
+  ComparisonChart,
+  SimulationInsights,
+} from "./simulation";
 
 // Section Components
-export * from "./sections";
+export {
+  Header,
+  Hero,
+  Features,
+  Benefits,
+  HowItWorks,
+  CTA,
+  Footer,
+} from "./sections";
 
 // Guide Components
-export * from "./guide";
+export {
+  GuideHeader,
+  GuideFilter,
+  GuideCard,
+  GuideModal,
+  GuideResources,
+} from "./guide";

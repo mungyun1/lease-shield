@@ -39,7 +39,6 @@ export default function SimulationPage() {
             {/* 시뮬레이션 컨트롤 */}
             <SimulationControls
               currentData={currentData}
-              originalData={originalData}
               onInputChange={handleInputChange}
               onReset={resetToOriginal}
               onSave={saveOriginal}
