@@ -6,7 +6,7 @@ interface SimulationControlsProps {
   currentData: SimulationData;
   onInputChange: (
     field: keyof Omit<SimulationData, "score" | "grade">,
-    value: number | boolean
+    value: number | boolean | string | null
   ) => void;
   onReset: () => void;
   onSave: () => void;
@@ -60,11 +60,11 @@ export default function SimulationControls({
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-semibold text-gray-700">
-              보증금
+              전세보증금
             </label>
             <span className="text-base font-bold text-blue-600">
-              {currentData.deposit
-                ? `${currentData.deposit.toLocaleString()}만원`
+              {currentData.jeonseDepositAmount
+                ? `${currentData.jeonseDepositAmount.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
@@ -74,9 +74,9 @@ export default function SimulationControls({
               min="1000"
               max="20000"
               step="500"
-              value={currentData.deposit || 0}
+              value={currentData.jeonseDepositAmount || 0}
               onChange={(e) =>
-                onInputChange("deposit", parseInt(e.target.value))
+                onInputChange("jeonseDepositAmount", parseInt(e.target.value))
               }
               className="w-full h-2.5 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg appearance-none cursor-pointer slider-thumb"
             />
@@ -90,33 +90,33 @@ export default function SimulationControls({
           </div>
         </div>
 
-        {/* 대출금 슬라이더 */}
+        {/* 재산가치 슬라이더 */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-semibold text-gray-700">
-              대출금
+              재산가치
             </label>
             <span className="text-base font-bold text-purple-600">
-              {currentData.loanAmount
-                ? `${currentData.loanAmount.toLocaleString()}만원`
+              {currentData.propertyValue
+                ? `${currentData.propertyValue.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
           <div className="relative">
             <input
               type="range"
-              min="0"
-              max="10000"
-              step="500"
-              value={currentData.loanAmount || 0}
+              min="10000"
+              max="100000"
+              step="1000"
+              value={currentData.propertyValue || 0}
               onChange={(e) =>
-                onInputChange("loanAmount", parseInt(e.target.value))
+                onInputChange("propertyValue", parseInt(e.target.value))
               }
               className="w-full h-2.5 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg appearance-none cursor-pointer slider-thumb"
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1.5">
-              <span>0만원</span>
               <span>10,000만원</span>
+              <span>100,000만원</span>
             </div>
           </div>
           <div className="mt-2 p-2.5 bg-purple-50 rounded-lg border-l-3 border-purple-400">
@@ -130,9 +130,12 @@ export default function SimulationControls({
             <label className="flex items-start cursor-pointer">
               <input
                 type="checkbox"
-                checked={currentData.hasPriorityDebt}
+                checked={!!currentData.seniorLienAmount}
                 onChange={(e) =>
-                  onInputChange("hasPriorityDebt", e.target.checked)
+                  onInputChange(
+                    "seniorLienAmount",
+                    e.target.checked ? 1000 : null
+                  )
                 }
                 className="mr-2.5 mt-0.5 h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
               />
@@ -149,19 +152,25 @@ export default function SimulationControls({
             <label className="flex items-start cursor-pointer">
               <input
                 type="checkbox"
-                checked={currentData.hasTenancyRegistration}
+                checked={
+                  !!(
+                    currentData.coverageStartYyyymm &&
+                    currentData.coverageEndYyyymm
+                  )
+                }
                 onChange={(e) =>
-                  onInputChange("hasTenancyRegistration", e.target.checked)
+                  onInputChange(
+                    "coverageStartYyyymm",
+                    e.target.checked ? "2024-01" : ""
+                  )
                 }
                 className="mr-2.5 mt-0.5 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
               />
               <div>
                 <span className="text-sm font-semibold text-green-800">
-                  임차권 등기 완료
+                  보험 기간 설정
                 </span>
-                <p className="text-xs text-green-700 mt-1">
-                  ✅ 위험도 크게 감소
-                </p>
+                <p className="text-xs text-green-700 mt-1">✅ 위험도 감소</p>
               </div>
             </label>
           </div>

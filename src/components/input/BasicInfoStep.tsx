@@ -1,5 +1,6 @@
-import { MapPin, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import { ContractData } from "@/types";
+import AddressInput from "./AddressInput";
 
 interface BasicInfoStepProps {
   contractData: ContractData;
@@ -10,11 +11,24 @@ export default function BasicInfoStep({
   contractData,
   setContractData,
 }: BasicInfoStepProps) {
+  const handleAddressChange = (
+    zipCode: string,
+    address: string,
+    detailAddress: string
+  ) => {
+    setContractData({
+      ...contractData,
+      zipCode,
+      address,
+      detailAddress,
+    });
+  };
+
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          지역 및 주택 정보
+          주소 및 주택 정보
         </h2>
         <div className="relative inline-block">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-2xl blur-sm opacity-20"></div>
@@ -32,46 +46,21 @@ export default function BasicInfoStep({
                 ></div>
               </div>
               <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                지역과 주택 유형을 선택해주세요
+                주소와 주택 유형을 입력해주세요
               </span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            <MapPin className="w-4 h-4 inline mr-2 text-blue-600" />
-            지역
-          </label>
-          <select
-            value={contractData.region}
-            onChange={(e) =>
-              setContractData({
-                ...contractData,
-                region: e.target.value,
-              })
-            }
-            className="cursor-pointer w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
-          >
-            <option value="">지역을 선택하세요</option>
-            <option value="gangwon">강원</option>
-            <option value="gyeonggi">경기</option>
-            <option value="gyeongnam">경남</option>
-            <option value="gyeongbuk">경북</option>
-            <option value="gwangju">광주</option>
-            <option value="daegu">대구</option>
-            <option value="daejeon">대전</option>
-            <option value="busan">부산</option>
-            <option value="seoul">서울</option>
-            <option value="ulsan">울산</option>
-            <option value="incheon">인천</option>
-            <option value="jeonnam">전남</option>
-            <option value="jeonbuk">전북</option>
-            <option value="chungnam">충남</option>
-            <option value="chungbuk">충북</option>
-          </select>
+          <AddressInput
+            zipCode={contractData.zipCode || ""}
+            address={contractData.address || ""}
+            detailAddress={contractData.detailAddress || ""}
+            onAddressChange={handleAddressChange}
+          />
         </div>
 
         <div className="space-y-4">
@@ -98,27 +87,25 @@ export default function BasicInfoStep({
             <option value="commercial">주상복합</option>
           </select>
         </div>
+      </div>
 
-        <div className="space-y-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
-            <span className="w-4 h-4 inline mr-2 text-red-600">💰</span>
-            선순위채권
-          </label>
-          <input
-            type="number"
-            value={contractData.seniorLienAmount || ""}
-            onChange={(e) =>
-              setContractData({
-                ...contractData,
-                seniorLienAmount: e.target.value
-                  ? Number(e.target.value)
-                  : null,
-              })
-            }
-            placeholder="금액을 입력하세요"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
-          />
-        </div>
+      <div className="space-y-4">
+        <label className="block text-sm font-semibold text-gray-700 mb-3">
+          <span className="w-4 h-4 inline mr-2 text-red-600">💰</span>
+          선순위채권
+        </label>
+        <input
+          type="number"
+          value={contractData.seniorLienAmount || ""}
+          onChange={(e) =>
+            setContractData({
+              ...contractData,
+              seniorLienAmount: e.target.value ? Number(e.target.value) : null,
+            })
+          }
+          placeholder="금액을 입력하세요"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-gray-700 bg-gray-50 hover:bg-white"
+        />
       </div>
     </div>
   );

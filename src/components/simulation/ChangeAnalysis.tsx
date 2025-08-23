@@ -19,9 +19,10 @@ export default function ChangeAnalysis({
 }: ChangeAnalysisProps) {
   const scoreChange = currentData.score - originalData.score;
   const depositChange =
-    (currentData.deposit || 0) - (originalData.deposit || 0);
-  const loanChange =
-    (currentData.loanAmount || 0) - (originalData.loanAmount || 0);
+    (currentData.jeonseDepositAmount || 0) -
+    (originalData.jeonseDepositAmount || 0);
+  const propertyChange =
+    (currentData.propertyValue || 0) - (originalData.propertyValue || 0);
 
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">
@@ -95,7 +96,7 @@ export default function ChangeAnalysis({
           </div>
         </motion.div>
 
-        {/* 보증금 변화 */}
+        {/* 전세보증금 변화 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -127,7 +128,7 @@ export default function ChangeAnalysis({
             {depositChange.toLocaleString()}
           </div>
           <div className="text-lg font-semibold text-gray-700 mb-3">
-            보증금 변화
+            전세보증금 변화
           </div>
 
           <div
@@ -140,7 +141,7 @@ export default function ChangeAnalysis({
             {depositChange > 0 ? (
               <div className="flex items-center justify-center">
                 <AlertTriangle className="w-4 h-4 mr-2" />
-                위험도 증가: 보증금 낮춤 필요
+                위험도 증가: 전세보증금 낮춤 필요
               </div>
             ) : (
               <div className="flex items-center justify-center">
@@ -151,19 +152,19 @@ export default function ChangeAnalysis({
           </div>
         </motion.div>
 
-        {/* 대출금 변화 */}
+        {/* 재산가치 변화 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className={`text-center p-6 rounded-2xl border-2 ${
-            loanChange > 0
+            propertyChange > 0
               ? "bg-red-50 border-red-200"
               : "bg-green-50 border-green-200"
           }`}
         >
           <div className="mb-4">
-            {loanChange > 0 ? (
+            {propertyChange > 0 ? (
               <div className="p-3 bg-red-100 rounded-full w-16 h-16 mx-auto flex items-center justify-center">
                 <TrendingUp className="w-8 h-8 text-red-600" />
               </div>
@@ -176,27 +177,27 @@ export default function ChangeAnalysis({
 
           <div
             className={`text-3xl font-bold mb-2 ${
-              loanChange > 0 ? "text-red-600" : "text-green-600"
+              propertyChange > 0 ? "text-red-600" : "text-green-600"
             }`}
           >
-            {loanChange > 0 ? "+" : ""}
-            {loanChange.toLocaleString()}
+            {propertyChange > 0 ? "+" : ""}
+            {propertyChange.toLocaleString()}
           </div>
           <div className="text-lg font-semibold text-gray-700 mb-3">
-            대출금 변화
+            재산가치 변화
           </div>
 
           <div
             className={`p-3 rounded-xl text-sm font-medium ${
-              loanChange > 0
+              propertyChange > 0
                 ? "bg-red-100 text-red-700"
                 : "bg-green-100 text-green-700"
             }`}
           >
-            {loanChange > 0 ? (
+            {propertyChange > 0 ? (
               <div className="flex items-center justify-center">
                 <AlertTriangle className="w-4 h-4 mr-2" />
-                위험도 증가: 대출금 감소 필요
+                위험도 증가: 재산가치 조정 필요
               </div>
             ) : (
               <div className="flex items-center justify-center">

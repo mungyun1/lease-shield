@@ -78,7 +78,7 @@ export default function StepIndicator({
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
-                      className="h-0.5 bg-blue-500 rounded-full mt-1"
+                      className="h-0.5 rounded-full mt-1"
                     />
                   )}
                 </div>
@@ -99,7 +99,7 @@ export default function StepIndicator({
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
-                      className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full absolute top-0 left-0"
+                      className="h-full bg-gradient-to-r rounded-full absolute top-0 left-0"
                     />
                   )}
                 </div>

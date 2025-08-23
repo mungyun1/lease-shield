@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, DollarSign } from "lucide-react";
-import { StepIndicator, PageHeader, StepForm } from "@/components/input";
+import { MapPin, DollarSign, FileText } from "lucide-react";
 import { ContractData } from "@/types";
+import { PageHeader, StepForm, StepIndicator } from "@/components/input";
 
 const steps = [
   {
@@ -27,6 +27,9 @@ export default function InputPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [contractData, setContractData] = useState<ContractData>({
     region: "",
+    address: "",
+    zipCode: "",
+    detailAddress: "",
     housingType: "",
     seniorLienAmount: null,
     jeonseDepositAmount: null,
@@ -72,7 +75,7 @@ export default function InputPage() {
   const isStepValid = (): boolean => {
     switch (currentStep) {
       case 1:
-        return Boolean(contractData.region && contractData.housingType);
+        return Boolean(contractData.address && contractData.housingType);
       case 2:
         return Boolean(
           contractData.jeonseDepositAmount &&

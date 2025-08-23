@@ -52,7 +52,7 @@ export default function StepForm({
                   ease: [0.4, 0, 0.2, 1],
                   scale: { duration: 0.3 },
                 }}
-                className="px-6 min-h-[450px] flex items-center justify-center"
+                className="px-6 min-h-[550px] flex items-center justify-center"
               >
                 {/* 스텝별 컨텐츠 - 높이 조정 */}
                 <div className="min-h-[380px] flex items-center justify-center">

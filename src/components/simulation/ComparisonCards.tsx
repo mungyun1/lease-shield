@@ -51,35 +51,38 @@ export default function ComparisonCards({
         {/* 상세 정보 */}
         <div className="space-y-3 text-sm relative z-10">
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">보증금:</span>
+            <span className="text-gray-600 font-medium">전세보증금:</span>
             <span className="font-bold text-gray-800">
-              {originalData.deposit
-                ? `${originalData.deposit.toLocaleString()}만원`
+              {originalData.jeonseDepositAmount
+                ? `${originalData.jeonseDepositAmount.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">대출금:</span>
+            <span className="text-gray-600 font-medium">재산가치:</span>
             <span className="font-bold text-gray-800">
-              {originalData.loanAmount
-                ? `${originalData.loanAmount.toLocaleString()}만원`
+              {originalData.propertyValue
+                ? `${originalData.propertyValue.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">선순위 채권:</span>
             <span
-              className={`font-bold ${originalData.hasPriorityDebt ? "text-red-600" : "text-green-600"}`}
+              className={`font-bold ${originalData.seniorLienAmount ? "text-red-600" : "text-green-600"}`}
             >
-              {originalData.hasPriorityDebt ? "있음" : "없음"}
+              {originalData.seniorLienAmount ? "있음" : "없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">임차권 등기:</span>
+            <span className="text-gray-600 font-medium">보험 기간:</span>
             <span
-              className={`font-bold ${originalData.hasTenancyRegistration ? "text-green-600" : "text-red-600"}`}
+              className={`font-bold ${originalData.coverageStartYyyymm && originalData.coverageEndYyyymm ? "text-green-600" : "text-red-600"}`}
             >
-              {originalData.hasTenancyRegistration ? "완료" : "미완료"}
+              {originalData.coverageStartYyyymm &&
+              originalData.coverageEndYyyymm
+                ? "설정됨"
+                : "미설정"}
             </span>
           </div>
         </div>
@@ -142,35 +145,37 @@ export default function ComparisonCards({
         {/* 상세 정보 */}
         <div className="space-y-3 text-sm relative z-10">
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">보증금:</span>
+            <span className="text-gray-600 font-medium">전세보증금:</span>
             <span className="font-bold text-gray-800">
-              {currentData.deposit
-                ? `${currentData.deposit.toLocaleString()}만원`
+              {currentData.jeonseDepositAmount
+                ? `${currentData.jeonseDepositAmount.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">대출금:</span>
+            <span className="text-gray-600 font-medium">재산가치:</span>
             <span className="font-bold text-gray-800">
-              {currentData.loanAmount
-                ? `${currentData.loanAmount.toLocaleString()}만원`
+              {currentData.propertyValue
+                ? `${currentData.propertyValue.toLocaleString()}만원`
                 : "정보 없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
             <span className="text-gray-600 font-medium">선순위 채권:</span>
             <span
-              className={`font-bold ${currentData.hasPriorityDebt ? "text-red-600" : "text-green-600"}`}
+              className={`font-bold ${currentData.seniorLienAmount ? "text-red-600" : "text-green-600"}`}
             >
-              {currentData.hasPriorityDebt ? "있음" : "없음"}
+              {currentData.seniorLienAmount ? "있음" : "없음"}
             </span>
           </div>
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-            <span className="text-gray-600 font-medium">임차권 등기:</span>
+            <span className="text-gray-600 font-medium">보험 기간:</span>
             <span
-              className={`font-bold ${currentData.hasTenancyRegistration ? "text-green-600" : "text-red-600"}`}
+              className={`font-bold ${currentData.coverageStartYyyymm && currentData.coverageEndYyyymm ? "text-green-600" : "text-red-600"}`}
             >
-              {currentData.hasTenancyRegistration ? "완료" : "미완료"}
+              {currentData.coverageStartYyyymm && currentData.coverageEndYyyymm
+                ? "설정됨"
+                : "미설정"}
             </span>
           </div>
         </div>

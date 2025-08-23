@@ -1,6 +1,9 @@
 // 계약 정보 타입
 export interface ContractData {
   region: string;
+  address: string;
+  zipCode: string;
+  detailAddress: string;
   housingType: string;
   seniorLienAmount: number | null;
   jeonseDepositAmount: number | null;

@@ -43,11 +43,11 @@ export default function LegalInfoStep({
           <label className="flex items-start cursor-pointer group">
             <input
               type="checkbox"
-              checked={contractData.hasPriorityDebt}
+              checked={!!contractData.seniorLienAmount}
               onChange={(e) =>
                 setContractData({
                   ...contractData,
-                  hasPriorityDebt: e.target.checked,
+                  seniorLienAmount: e.target.checked ? 1000 : null,
                 })
               }
               className="mr-4 mt-1 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition-all duration-200"
@@ -69,23 +69,28 @@ export default function LegalInfoStep({
           <label className="flex items-start cursor-pointer group">
             <input
               type="checkbox"
-              checked={contractData.hasTenancyRegistration}
+              checked={
+                !!(
+                  contractData.coverageStartYyyymm &&
+                  contractData.coverageEndYyyymm
+                )
+              }
               onChange={(e) =>
                 setContractData({
                   ...contractData,
-                  hasTenancyRegistration: e.target.checked,
+                  coverageStartYyyymm: e.target.checked ? "2024-01" : "",
+                  coverageEndYyyymm: e.target.checked ? "2024-12" : "",
                 })
               }
               className="mr-4 mt-1 h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
             />
             <div className="flex-1">
               <span className="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors duration-200">
-                임차권 등기를 했나요?
+                보험 기간을 설정했나요?
               </span>
               <p className="text-gray-600 mt-2 leading-relaxed">
-                임차권을 등기부에 등록하면 제3자에게 대항할 수 있는 권리를
-                가지게 됩니다. 이는 전세 보증금 우선변제권을 확보하는 중요한
-                절차입니다.
+                보험 기간을 설정하면 위험을 체계적으로 관리할 수 있습니다. 이는
+                전세 보증금 보호를 위한 중요한 설정입니다.
               </p>
             </div>
           </label>

@@ -25,16 +25,16 @@ const generateCustomRecommendations = (data: ContractData) => {
     icon: React.ReactNode;
   }> = [];
 
-  // 보증금 관련 권고
-  if (data.deposit && data.deposit > 10000) {
+  // 전세보증금 관련 권고
+  if (data.jeonseDepositAmount && data.jeonseDepositAmount > 10000) {
     recommendations.push({
-      title: "보증금 분할 납부 협의",
+      title: "전세보증금 분할 납부 협의",
       description:
-        "높은 보증금으로 인한 위험을 줄이기 위해 임대인과 협의하세요",
+        "높은 전세보증금으로 인한 위험을 줄이기 위해 임대인과 협의하세요",
       priority: "high",
       actions: [
-        "임대인과 보증금 분할 납부 협의",
-        "보증금을 낮추고 월세로 조정",
+        "임대인과 전세보증금 분할 납부 협의",
+        "전세보증금을 낮추고 월세로 조정",
         "대출금 상환 계획 수립",
         "보증 한도 조정 검토",
       ],
@@ -42,24 +42,24 @@ const generateCustomRecommendations = (data: ContractData) => {
     });
   }
 
-  // LTV(대출비율) 관련 권고
-  if (data.loanAmount && data.deposit && data.loanAmount > data.deposit * 0.7) {
+  // 재산가치 관련 권고
+  if (data.propertyValue && data.propertyValue > 50000) {
     recommendations.push({
-      title: "대출비율(LTV) 조정",
-      description: "보증금 대비 높은 대출금으로 인한 위험을 관리하세요",
+      title: "재산가치 관리",
+      description: "높은 재산가치로 인한 위험을 관리하세요",
       priority: "high",
       actions: [
-        "대출금 상환 계획 수립",
-        "보증금 추가 납입 고려",
-        "대출 조건 재협상",
-        "월 상환액 조정",
+        "재산가치 평가 재검토",
+        "보험 범위 조정",
+        "위험 분산 방안 검토",
+        "전문가 상담",
       ],
       icon: <TrendingUp className="w-6 h-6 text-orange-500" />,
     });
   }
 
   // 선순위 채권 관련 권고
-  if (data.hasPriorityDebt) {
+  if (data.seniorLienAmount) {
     recommendations.push({
       title: "등기부등본 확인 및 보증금 회수 가능성 점검",
       description:
@@ -75,24 +75,27 @@ const generateCustomRecommendations = (data: ContractData) => {
     });
   }
 
-  // 임차권 등기 관련 권고
-  if (!data.hasTenancyRegistration) {
+  // 보험 기간 관련 권고
+  if (!data.coverageStartYyyymm || !data.coverageEndYyyymm) {
     recommendations.push({
-      title: "임차권 등기 신청",
-      description: "임차권을 등기부에 등록하여 우선순위를 확보하세요",
+      title: "보험 기간 설정",
+      description: "보험 기간을 설정하여 위험을 관리하세요",
       priority: "medium",
       actions: [
-        "등기신청서 작성",
-        "필요 서류 준비 (임대차계약서, 등기원인 등)",
-        "법원 방문 또는 온라인 신청",
-        "등기 완료 후 등기부등본 확인",
+        "보험 시작일 설정",
+        "보험 종료일 설정",
+        "보험 범위 검토",
+        "보험료 조정",
       ],
       icon: <CheckCircle className="w-6 h-6 text-blue-500" />,
     });
   }
 
-  // 지역별 추가 권고
-  if (data.region === "seoul" || data.region === "gyeonggi") {
+  // 주소별 추가 권고 (수도권 지역)
+  if (
+    data.address &&
+    (data.address.includes("서울") || data.address.includes("경기"))
+  ) {
     recommendations.push({
       title: "수도권 특화 위험 관리",
       description: "수도권 지역의 높은 부동산 가격 변동성에 대비하세요",
