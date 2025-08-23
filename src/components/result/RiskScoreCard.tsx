@@ -33,7 +33,7 @@ export default function RiskScoreCard({
       transition={{ delay: 0.4 }}
       className="lg:col-span-1"
     >
-      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg border border-white/20 p-8">
+      <div className="flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm rounded-3xl shadow-lg border border-white/20 p-8 h-[530px]">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">위험 점수</h2>
 

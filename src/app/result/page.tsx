@@ -8,7 +8,6 @@ import { downloadReport } from "@/utils/riskAnalysis";
 import {
   ContractSummary,
   RiskScoreCard,
-  RiskFactorsAnalysis,
   CustomRecommendations,
   ActionButtons,
   ResultHeader,
@@ -20,7 +19,6 @@ import {
   createApiBasedAnalysis,
   generateCustomRecommendations,
   getRiskGrade,
-  generateRiskFactors,
   generateExplanation,
 } from "@/utils/apiAnalysis";
 
@@ -119,23 +117,20 @@ export default function ResultPage() {
             animatedScore={animatedScore}
           />
 
-          {/* 위험 요인 분석 */}
-          <RiskFactorsAnalysis factors={generateRiskFactors(apiResponse)} />
+          {/* 전역 중요도 분석 차트 */}
+          {apiResponse?.explanations?.globalImportance && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="lg:col-span-2"
+            >
+              <GlobalImportanceChart
+                data={apiResponse.explanations.globalImportance}
+              />
+            </motion.div>
+          )}
         </div>
-
-        {/* 전역 중요도 분석 차트 */}
-        {apiResponse?.explanations?.globalImportance && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-12"
-          >
-            <GlobalImportanceChart
-              data={apiResponse.explanations.globalImportance}
-            />
-          </motion.div>
-        )}
 
         {/* AI 설명 */}
         <motion.div
