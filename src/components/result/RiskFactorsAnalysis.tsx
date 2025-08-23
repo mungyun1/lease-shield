@@ -6,7 +6,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 import { RiskFactor } from "@/types";
@@ -87,15 +86,7 @@ export default function RiskFactorsAnalysis({
                 style: { textAnchor: "middle", fill: "#64748b" },
               }}
             />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "rgba(255, 255, 255, 0.98)",
-                border: "none",
-                borderRadius: "12px",
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                padding: "12px 16px",
-              }}
-            />
+
             <Bar
               dataKey="impact"
               fill="url(#barGradient)"
