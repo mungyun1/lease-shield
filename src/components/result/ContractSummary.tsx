@@ -112,7 +112,9 @@ export default function ContractSummary({
             </div>
             <div className="text-gray-500 text-sm mb-1 font-medium">보증금</div>
             <div className="font-bold text-gray-800 text-lg">
-              {contractData.deposit.toLocaleString()}만원
+              {contractData.deposit
+                ? `${contractData.deposit.toLocaleString()}만원`
+                : "정보 없음"}
             </div>
           </motion.div>
 
@@ -127,8 +129,10 @@ export default function ContractSummary({
               <TrendingUp className="w-8 h-8 text-orange-600 mx-auto mb-2" />
             </div>
             <div className="text-gray-500 text-sm mb-1 font-medium">대출금</div>
-            <div className="font-bold text-gray-800 text-lg">
-              {contractData.loanAmount.toLocaleString()}만원
+            <div className="text-gray-800 text-lg">
+              {contractData.loanAmount
+                ? `${contractData.loanAmount.toLocaleString()}만원`
+                : "정보 없음"}
             </div>
           </motion.div>
         </div>
