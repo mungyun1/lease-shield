@@ -13,6 +13,12 @@ import { ContractData } from "@/types";
 
 interface CustomRecommendationsProps {
   contractData: ContractData;
+  customRecommendations?: Array<{
+    title: string;
+    description: string;
+    priority: "high" | "medium" | "low";
+    actions: string[];
+  }>;
 }
 
 // 맞춤형 예방 조치 제안을 생성하는 함수
@@ -132,8 +138,26 @@ const generateCustomRecommendations = (data: ContractData) => {
 
 export default function CustomRecommendations({
   contractData,
+  customRecommendations,
 }: CustomRecommendationsProps) {
-  const recommendations = generateCustomRecommendations(contractData);
+  // 권장사항 제목에 따른 아이콘 반환 함수
+  const getRecommendationIcon = (title: string) => {
+    if (title.includes("LTV") || title.includes("비율"))
+      return <TrendingUp className="w-6 h-6 text-red-500" />;
+    if (title.includes("위험 관리") || title.includes("위험 발생"))
+      return <AlertTriangle className="w-6 h-6 text-orange-500" />;
+    if (title.includes("보험료"))
+      return <DollarSign className="w-6 h-6 text-blue-500" />;
+    return <Shield className="w-6 h-6 text-purple-500" />;
+  };
+
+  // API 응답 기반 권장사항이 있으면 사용, 없으면 기본 생성
+  const recommendations = customRecommendations
+    ? customRecommendations.map((rec) => ({
+        ...rec,
+        icon: getRecommendationIcon(rec.title),
+      }))
+    : generateCustomRecommendations(contractData);
 
   return (
     <motion.div

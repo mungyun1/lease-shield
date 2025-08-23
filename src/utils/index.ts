@@ -5,6 +5,7 @@ export * from "./riskAnalysis";
 export * from "./simulation";
 export * from "./addressUtils";
 export * from "./dateUtils";
+export * from "./apiAnalysis";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

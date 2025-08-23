@@ -13,7 +13,13 @@ import {
   ActionButtons,
   ResultHeader,
   LoadingSpinner,
+  APIResponseDisplay,
 } from "@/components/result";
+import {
+  APIResponse,
+  createApiBasedAnalysis,
+  generateCustomRecommendations,
+} from "@/utils/apiAnalysis";
 
 const mockData: RiskAnalysis = {
   score: 75,
@@ -46,21 +52,42 @@ export default function ResultPage() {
   const [riskResult, setRiskResult] = useState<RiskAnalysis | null>(null);
   const [animatedScore, setAnimatedScore] = useState(0);
   const [contractData, setContractData] = useState<ContractData | null>(null);
+  const [apiResponse, setApiResponse] = useState<APIResponse | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
-    // 로컬 스토리지에서 계약 데이터 불러오기
+    // 로컬 스토리지에서 계약 데이터와 API 응답 불러오기
     const savedContractData = localStorage.getItem("contractData");
+    const savedApiResponse = localStorage.getItem("apiResponse");
+
     if (savedContractData) {
       try {
         const parsedData = JSON.parse(savedContractData);
         setContractData(parsedData);
 
-        // 계약 데이터를 기반으로 위험도 분석 수행
-        const analysis = analyzeRisk(parsedData);
-        setRiskResult(analysis);
+        // API 응답이 있으면 사용, 없으면 기본 분석 수행
+        if (savedApiResponse) {
+          try {
+            const parsedApiResponse = JSON.parse(savedApiResponse);
+            setApiResponse(parsedApiResponse);
+
+            // API 응답을 기반으로 위험도 분석 데이터 생성
+            const apiBasedAnalysis = createApiBasedAnalysis(
+              parsedApiResponse,
+              parsedData
+            );
+            setRiskResult(apiBasedAnalysis);
+          } catch (error) {
+            // API 응답 파싱 실패 시 기본 분석 수행
+            const analysis = analyzeRisk(parsedData);
+            setRiskResult(analysis);
+          }
+        } else {
+          // API 응답이 없으면 기본 분석 수행
+          const analysis = analyzeRisk(parsedData);
+          setRiskResult(analysis);
+        }
       } catch (error) {
-        console.error("계약 데이터 파싱 오류:", error);
         // 기본 데이터로 폴백
         setRiskResult(mockData);
       }
@@ -92,7 +119,7 @@ export default function ResultPage() {
       try {
         await downloadReport(riskResult, contractData);
       } catch (error) {
-        console.error("리포트 다운로드 오류:", error);
+        // 리포트 다운로드 오류 처리
       } finally {
         setIsDownloading(false);
       }
@@ -121,6 +148,18 @@ export default function ResultPage() {
 
         {/* 계약 정보 요약 */}
         {contractData && <ContractSummary contractData={contractData} />}
+
+        {/* API 응답 데이터 표시 섹션 */}
+        {apiResponse && (
+          <APIResponseDisplay
+            apiResponse={apiResponse}
+            getRiskGrade={(score) => {
+              if (score <= 3) return "safe";
+              if (score <= 6) return "moderate";
+              return "danger";
+            }}
+          />
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
           {/* 위험 점수 카드 */}
@@ -155,7 +194,16 @@ export default function ResultPage() {
         </motion.div>
 
         {/* 맞춤형 예방 조치 제안 */}
-        {contractData && <CustomRecommendations contractData={contractData} />}
+        {contractData && (
+          <CustomRecommendations
+            contractData={contractData}
+            customRecommendations={
+              apiResponse
+                ? generateCustomRecommendations(apiResponse, contractData)
+                : undefined
+            }
+          />
+        )}
 
         {/* 액션 버튼 */}
         <ActionButtons

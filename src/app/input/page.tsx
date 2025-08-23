@@ -66,18 +66,13 @@ export default function InputPage() {
         coverageEndYyyymm: contractData.coverageEndYyyymm,
       };
 
-      // 필터링된 데이터를 콘솔에 출력
-      console.log("API 요청용 데이터:", apiRequestData);
-
       // API 요청 보내기
       try {
         const apiResponse = await calculateRiskScore(apiRequestData);
-        console.log("API 응답:", apiResponse);
 
         // API 응답을 로컬 스토리지에 저장
         localStorage.setItem("apiResponse", JSON.stringify(apiResponse));
       } catch (apiError) {
-        console.error("API 요청 실패:", apiError);
         // API 실패 시에도 계속 진행 (사용자 경험 향상)
       }
 
@@ -90,11 +85,8 @@ export default function InputPage() {
       // 결과 페이지로 이동
       router.push("/result");
     } catch (error) {
-      console.error("위험 진단 시작 중 오류 발생:", error);
       // 에러 처리 로직 추가 가능
     } finally {
-      // 로딩 상태를 위한 지연 (사용자 경험 향상)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSubmitting(false);
     }
   };
@@ -124,7 +116,6 @@ export default function InputPage() {
 
         return step2Valid;
       default:
-        console.log(contractData);
         return false;
     }
   };

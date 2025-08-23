@@ -111,7 +111,7 @@ export default function ContractSummary({
             <div className="text-gray-500 text-sm mb-1 font-medium">
               재산가치
             </div>
-            <div className="text-gray-800 text-lg">
+            <div className="font-bold text-gray-800 text-lg">
               {contractData.propertyValue
                 ? `${contractData.propertyValue.toLocaleString()}만원`
                 : "정보 없음"}
